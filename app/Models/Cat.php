@@ -20,7 +20,7 @@ class Cat extends Model
 
     public function keys()
     {
-        return $this->hasMany(Key::class, 'p_id');
+        return $this->hasMany(Key::class);
     }
 
     public function parent()
