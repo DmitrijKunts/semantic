@@ -50,7 +50,7 @@ class MapSheetImport implements OnEachRow
             $_c = Cat::firstOrCreate([
                 'p_id' => self::$levels[$lastCol - 1],
                 'name' => $_name,
-                'slug' => Str::of($_name)->slug('-')->start('/')->finish('/'),
+                'slug' => Str::of($_name)->slug('-')->start('/')//->finish('/'),
             ]);
 
             self::$levels[$lastCol] = $_c->id;
