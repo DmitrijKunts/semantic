@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CatController::class, 'front']);
+Route::get('/', [CatController::class, 'front'])->name('home');
 
-Route::get('{any}', [CatController::class, 'index']);
+Route::get('{any}', [CatController::class, 'index'])->name('cat');

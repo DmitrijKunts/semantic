@@ -25,6 +25,6 @@ class Cat extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Cat::class);
+        return $this->belongsTo(Cat::class, 'p_id');
     }
 }

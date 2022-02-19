@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
 
+    @yield('canonical')
+
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
     @include('header')
-
-    <h1>@yield('h1')</h1>
 
     @yield('content')
 
