@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <section class="text-gray-600 body-font">
+    <div class="text-gray-600 body-font">
         <div class="container px-5 py-12 mx-auto">
             {{ Breadcrumbs::render('cat', $cat) }}
 
@@ -24,7 +24,7 @@
             @endisset
 
             @isset($cat->goods)
-                @include('goods', ['goods' => $cat->goods])
+                @include('goods', ['goods' => $cat->goods, 'loadKeys' => $cat->calcKeysNotUsedWords()])
             @endisset
 
             {{-- {{ $cat->keysNotUsedWords }} --}}
@@ -34,7 +34,7 @@
             </p>
 
         </div>
-    </section>
+    </div>
 
 
 @endsection

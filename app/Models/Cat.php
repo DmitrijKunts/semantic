@@ -85,11 +85,4 @@ class Cat extends Model
     {
         return $this->belongsToMany(Good::class);
     }
-
-    protected static function booted()
-    {
-        static::retrieved(function (Cat $cat) {
-            $cat->calcKeysNotUsedWords();
-        });
-    }
 }
