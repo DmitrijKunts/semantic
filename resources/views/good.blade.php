@@ -33,8 +33,8 @@
                         </div>
                         @foreach ($good->techs() as $tech)
                             <div class="flex border-t border-gray-200 py-2">
-                                <span class="text-gray-500">{{ $good->techDiv($tech, 0) }}</span>
-                                <span class="ml-auto text-gray-900">{{ $good->techDiv($tech, 1) }}</span>
+                                <span class="text-gray-500">{!! $good->techDiv($tech, 0) !!}</span>
+                                <span class="ml-auto text-gray-900">{!! $good->techDiv($tech, 1) !!}</span>
                             </div>
                         @endforeach
                     @endisset
@@ -47,7 +47,7 @@
                         </div>
                         @foreach ($good->equips() as $equip)
                             <div class="flex border-t border-gray-200 py-2">
-                                <span class="text-gray-500">{{ $equip }}</span>
+                                <span class="text-gray-500">{!! $equip !!}</span>
                             </div>
                         @endforeach
                     @endisset
