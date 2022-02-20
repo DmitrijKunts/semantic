@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CatController;
+use App\Http\Controllers\GoodController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatController::class, 'front'])->name('home');
 
-Route::get('{any}', [CatController::class, 'index'])->name('cat');
+Route::get('/goods/{good:slug}.html', [GoodController::class, 'index'])->name('good');
+
+Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img');
+Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img.small');
+
+Route::get('/{cat:slug}.html', [CatController::class, 'index'])->name('cat');

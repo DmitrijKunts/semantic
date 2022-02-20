@@ -10,7 +10,7 @@
         </a>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             @foreach ($menu as $item)
-                <a href="{{ url($item->slug) }}" class="mr-5 hover:text-gray-900">{{ $item->name }}</a>
+                <a href="{{ route('cat', $item->slug) }}" class="mr-5 hover:text-gray-900">{{ $item->name }}</a>
             @endforeach
 
         </nav>

@@ -19,13 +19,12 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('text')->nullable();
+            $table->dateTime('feeded')->nullable();
 
             // $table->primary('id');
             $table->index('p_id');
             $table->index('name');
             $table->index('slug');
-
-            // $table->foreign('p_id')->references('id')->on('cats');
         });
     }
 

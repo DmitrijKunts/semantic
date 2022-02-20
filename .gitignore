@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 config/domain.php
 storage
+public/imgs/
