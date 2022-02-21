@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (scheme() == 'https') {
+            URL::forceScheme('https');
+        }
+
         Http::macro('feed', function () {
             $d = config('feed.api_url');
             return Http::baseUrl(config('feed.api_url'))

@@ -29,3 +29,20 @@ if (!function_exists('constOne')) {
         return collect(constSort($items, $noise))->first();
     }
 }
+
+if (!function_exists('scheme')) {
+    function scheme()
+    {
+        $cf = request()->server('HTTP_CF_VISITOR');
+        if ($cf) {
+            $scheme = json_decode($cf, true);
+            if (isset($scheme['scheme'])) {
+                return $scheme['scheme'];
+            } else {
+                return 'http';
+            }
+        } else {
+            return 'http';
+        }
+    }
+}
