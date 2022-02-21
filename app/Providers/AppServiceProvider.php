@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Cat;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
