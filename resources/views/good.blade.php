@@ -3,7 +3,7 @@
 @section('title', $good->name . ' - ' . config('app.name'))
 
 @section('canonical')
-    <link rel="canonical" href="{{ route('good', $good->slug) }}" />
+    <link rel="canonical" href="{{ route('good', $good) }}" />
 @endsection
 
 @section('content')

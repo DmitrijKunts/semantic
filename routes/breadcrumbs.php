@@ -19,10 +19,10 @@ Breadcrumbs::for('cat', function (BreadcrumbTrail $trail, Cat $cat, $lastActive 
     }
     $_cats = array_reverse($_cats);
     foreach ($_cats as $_c) {
-        $trail->push($_c->name, route('cat', $_c->slug));
+        $trail->push($_c->name, route('cat', $_c));
     }
     if ($lastActive) {
-        $trail->push($cat->name, route('cat', $cat->slug));
+        $trail->push($cat->name, route('cat', $cat));
     } else {
         $trail->push($cat->name);
     }

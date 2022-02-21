@@ -19,9 +19,9 @@ class Cat extends Model
     public function canonical()
     {
         if ($this->goods->count() || $this->childs->count()) {
-            return route('cat', $this->slug);
+            return route('cat', $this);
         } else {
-            return route('cat', $this->parent->slug);
+            return route('cat', $this->parent);
         }
     }
 

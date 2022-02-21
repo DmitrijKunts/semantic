@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     @foreach ($cats as $cat)
         <url>
-            <loc>{{ route('cat', $cat->slug) }}</loc>
+            <loc>{{ route('cat', $cat) }}</loc>
         </url>
     @endforeach
     @foreach ($goods as $good)
         <url>
-            <loc>{{ route('good', $good->slug) }}</loc>
+            <loc>{{ route('good', $good) }}</loc>
             <lastmod>{{ $good->created_at->format('Y-m-d') }}</lastmod>
         </url>
     @endforeach
