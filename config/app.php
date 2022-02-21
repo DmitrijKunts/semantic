@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'gtagId' => env('GTAG_ID', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

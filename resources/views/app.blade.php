@@ -10,6 +10,7 @@
     @yield('canonical')
 
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    @include('gtag')
 </head>
 
 <body>
