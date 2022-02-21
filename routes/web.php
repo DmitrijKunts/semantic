@@ -3,6 +3,7 @@
 use App\Http\Controllers\CatController;
 use App\Http\Controllers\GoodController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [CatController::class, 'front'])->name('home');
+
+Route::get('/robots.txt', function () {
+    return response()
+        ->view('robots')
+        ->header('Content-Type', 'text/plain; charset=utf-8');
+})->name('robots');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/goods/{good:slug}.html', [GoodController::class, 'index'])->name('good');
 
