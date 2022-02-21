@@ -1,5 +1,9 @@
 @extends('app')
 
+@section('canonical')
+    <link rel="canonical" href="{{ route('home') }}" />
+@endsection
+
 @section('title', config('app.name'))
 
 @section('content')
