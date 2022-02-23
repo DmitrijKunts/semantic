@@ -48,7 +48,10 @@ class Good extends Model
 
     public function brothers()
     {
-        return $this->cats()->first()->goods()->where('goods.id', '<>', $this->id)->limit(3)->get();
+        $first = collect($this->cats()->first()->goods()->reorder()->orderBy('id', 'desc')->where('goods.id', '<', $this->id)->limit(2)->get());
+        $second = $this->cats()->first()->goods()->reorder()->orderBy('id', 'asc')->where('goods.id', '>', $this->id)->limit(2)->get();
+        return $first->merge($second);
+        // return $this->cats()->first()->goods()->where('goods.id', '<>', $this->id)->limit(3)->get();
     }
 
     public function nameKey($cat)
