@@ -19,8 +19,8 @@
 
             {{-- {{ $cat->keysNotUsedWords }} --}}
 
-            @isset($cat->childs)
-                @include('cats', ['catChilds' => $cat->childs])
+            @isset($catChilds)
+                @include('cats', ['catChilds' => $catChilds])
             @endisset
 
             @isset($cat->goods)

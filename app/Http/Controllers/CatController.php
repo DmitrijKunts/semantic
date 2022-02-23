@@ -16,11 +16,25 @@ class CatController extends Controller
 
     public function index(Cat $cat)
     {
+        $catChilds = null;
         if ($cat->childs->count() == 0 && $cat->feeded == null) {
             Good::makeFromXML(Feed::getFeed($cat->name), $cat);
             $cat->feeded = now();
             $cat->save();
+        } else {
+            $catChilds = Cat::withCount('goods')
+                ->where('p_id',  $cat->id)
+                ->where(function ($query) {
+                    $query->where('feeded', null)
+                        ->orWhere('goods_count', '>', 0)
+                        ->orWhere(function ($query) {
+                            $query->selectRaw('count(*)')
+                                ->from('cats as c')
+                                ->whereColumn('c.p_id', 'cats.id');
+                        }, '>', 0);
+                })
+                ->get();
         }
-        return view('cat', compact('cat'));
+        return view('cat', compact('cat', 'catChilds'));
     }
 }

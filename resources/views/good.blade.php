@@ -75,7 +75,7 @@
         </div>
     </section>
 
-    @include('cats', ['catChilds' => $good->cats()->first()->brothers(), 'catsAsKeys' => $good->name])
+    @include('cats', ['catChilds' => $good->cats()->first()->brothersNotBlank(), 'catsAsKeys' => $good->name])
 
     @include('goods', ['goods' => $good->brothers()])
 @endsection

@@ -81,6 +81,24 @@ class Cat extends Model
         return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->get();
     }
 
+    public function brothersNotBlank()
+    {
+        return Cat::withCount('goods')
+            ->where('id', '<>', $this->id)
+            ->where('p_id',  $this->p_id)
+            ->where(function ($query) {
+                $query->where('feeded', null)
+                    ->orWhere('goods_count', '>', 0)
+                    ->orWhere(function ($query) {
+                        $query->selectRaw('count(*)')
+                            ->from('cats as c')
+                            ->whereColumn('c.p_id', 'cats.id');
+                    }, '>', 0);
+            })
+            ->get();
+        // return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->get();
+    }
+
     public function goods()
     {
         return $this->belongsToMany(Good::class)->orderBy('name');
