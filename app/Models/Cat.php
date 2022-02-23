@@ -83,6 +83,6 @@ class Cat extends Model
 
     public function goods()
     {
-        return $this->belongsToMany(Good::class);
+        return $this->belongsToMany(Good::class)->orderBy('name');
     }
 }
