@@ -14,5 +14,6 @@ yarn-error.log
 /.idea
 /.vscode
 config/domain.php
-storage
+/storage/*
+!/storage/user-agents.txt
 public/imgs/
