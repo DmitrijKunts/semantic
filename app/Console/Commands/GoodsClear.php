@@ -2,25 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Imports\CatsImport;
+use App\Models\Good;
 use Illuminate\Console\Command;
-use Maatwebsite\Excel\Facades\Excel;
 
-class ImportCats extends Command
+class GoodsClear extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cats:import';
+    protected $signature = 'goods:clear';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import cats with semantic from Excel-file';
+    protected $description = 'Goods clear';
 
     /**
      * Create a new command instance.
@@ -39,9 +38,7 @@ class ImportCats extends Command
      */
     public function handle()
     {
-        $this->output->title('Starting import');
-        Excel::import(new CatsImport($this), storage_path('cats.xlsx'));
-        $this->output->success('Import successful');
+        Good::truncate();
         return 0;
     }
 }

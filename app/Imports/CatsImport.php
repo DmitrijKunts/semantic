@@ -13,15 +13,23 @@ use Maatwebsite\Excel\Concerns\OnEachRow;
 
 class CatsImport implements WithMultipleSheets, SkipsUnknownSheets
 {
+    private $output;
+
+    public function __construct($output)
+    {
+        $this->output = $output;
+    }
+
     public function sheets(): array
     {
         $res = [];
         foreach (range(1, 1000) as $k => $v) {
-            $res[$k] = new ClusterSheetImport();
+            $res[$k] = new ClusterSheetImport($this->output);
         }
-        $res[0] = new MapSheetImport();
+        $res[0] = new MapSheetImport($this->output);
         return $res;
     }
+
     public function onUnknownSheet($sheetName)
     {
         // E.g. you can log that a sheet was not found.
@@ -32,6 +40,13 @@ class CatsImport implements WithMultipleSheets, SkipsUnknownSheets
 class MapSheetImport implements OnEachRow
 {
     static private $levels = [1 => -1, 0 => -1];
+    private $output;
+
+    public function __construct($output)
+    {
+        $this->output = $output;
+        $this->output->info("Cats importing...");
+    }
 
     public function onRow(Row $row)
     {
@@ -47,19 +62,37 @@ class MapSheetImport implements OnEachRow
             }
         }
         if ($_name != '') {
+            $pId = self::$levels[$lastCol - 1];
             $_c = Cat::firstOrCreate([
-                'p_id' => self::$levels[$lastCol - 1],
+                'p_id' => $pId,
                 'name' => $_name,
-                'slug' => Str::of($_name)->slug('-')//->start('/')//->finish('/'),
+                'slug' => self::genSlug($_name, $pId)
             ]);
 
             self::$levels[$lastCol] = $_c->id;
         }
     }
+
+    public static function genSlug($name, $pId)
+    {
+        $slug = Str::of($name)->slug('-');
+        if (Cat::where('slug', $slug)->exists()) {
+            return Str::of("$name $pId")->slug('-');
+        }
+        return $slug;
+    }
 }
 
 class ClusterSheetImport implements OnEachRow
 {
+    private $output;
+
+    public function __construct($output)
+    {
+        $this->output = $output;
+        $this->output->info("$sheet importing...");
+    }
+
     public function onRow(Row $row)
     {
         if (($sheet = $row->getDelegate()->getWorksheet()->getTitle()) == 'Справка') return;

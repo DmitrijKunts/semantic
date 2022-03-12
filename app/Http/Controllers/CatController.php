@@ -18,8 +18,8 @@ class CatController extends Controller
     {
         $catChilds = null;
         if ($cat->childs->count() == 0 && $cat->feeded == null) {
-            Good::makeFromXML(Feed::getFeed($cat->name), $cat);
-            $cat->feeded = now();
+            Good::makeFromJson(Feed::getFeed($cat->name), $cat);
+            // $cat->feeded = now();
             $cat->save();
         } else {
             $catChilds = Cat::withCount('goods')

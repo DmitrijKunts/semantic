@@ -14,17 +14,10 @@ class Feed
     private static function baseParams(): array
     {
         return  [
-            '_gs_at' => config('feed.api_key'),
+            'token' => config('feed.api_token'),
             'host' => app()->domain(),
             'ln' => config('feed.lang'),
-            'genalt' => 1,
-            'minprice' => config('feed.minprice'),
-            'l' =>  config('feed.goodsCount'),
-            'division' => 1,
-            'strict' => 1,
-            'pure' => 1,
-
-            'lastserver' => 1, //почему то не резолвится хост
+            'c' =>  config('feed.goods_count'),
         ];
     }
 
@@ -32,9 +25,6 @@ class Feed
     {
         $params = self::baseParams();
         $params['q'] = $query;
-        if ($oid) {
-            $params['oid'] = $oid;
-        }
         // if (config('app.debug')) {
         //     $params['lastserver'] = 1;
         //     dd(Http::feed()->withOptions([
@@ -47,34 +37,34 @@ class Feed
     }
 
 
-    public function checkTargetAvailable($target)
-    {
-        $params = [
-            '_gs_at' => $this->apiKey,
-            'checktarget' => $target,
-            'host' => request()->getHost(),
-            'ln' => $this->lang,
-            'lastserver' => 1, //тут важна скорость
-        ];
-        // if (config('app.debug')) {
-        //     $params['lastserver'] = 1;
-        //     dd(Http::retry(1, 1)->get($this->apiUrl, $params));
-        // }
-        $response = Http::retry(1, 500)->get($this->apiUrl, $params);
+    // public function checkTargetAvailable($target)
+    // {
+    //     $params = [
+    //         '_gs_at' => $this->apiKey,
+    //         'checktarget' => $target,
+    //         'host' => request()->getHost(),
+    //         'ln' => $this->lang,
+    //         'lastserver' => 1, //тут важна скорость
+    //     ];
+    //     // if (config('app.debug')) {
+    //     //     $params['lastserver'] = 1;
+    //     //     dd(Http::retry(1, 1)->get($this->apiUrl, $params));
+    //     // }
+    //     $response = Http::retry(1, 500)->get($this->apiUrl, $params);
 
-        if (!$response->successful()) return 1; //при ошибки возвращаем, что оффер существует, тут важна скорость
-        return $response->body();
-    }
+    //     if (!$response->successful()) return 1; //при ошибки возвращаем, что оффер существует, тут важна скорость
+    //     return $response->body();
+    // }
 
-    public function getImgInfoFromServer($url)
-    {
-        $response = Http::retry(3, 30000)->get($this->apiUrl, [
-            '_gs_at' => $this->apiKey,
-            'hash2imginfo' => md5($url),
+    // public function getImgInfoFromServer($url)
+    // {
+    //     $response = Http::retry(3, 30000)->get($this->apiUrl, [
+    //         '_gs_at' => $this->apiKey,
+    //         'hash2imginfo' => md5($url),
 
-            'lastserver' => 1, //почему то не резолвится хост
-        ]);
-        if (!$response->successful()) return false;
-        return $pic_info = (object)json_decode($response->body(), true);
-    }
+    //         'lastserver' => 1, //почему то не резолвится хост
+    //     ]);
+    //     if (!$response->successful()) return false;
+    //     return $pic_info = (object)json_decode($response->body(), true);
+    // }
 }

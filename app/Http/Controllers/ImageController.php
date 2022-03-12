@@ -46,7 +46,7 @@ class ImageController extends Controller
 
         $urlMd5 = md5($picUrl);
         $urlMd5 = [(string)Str::substr($urlMd5, 0, 2), (string)Str::substr($urlMd5, 2, 2), $urlMd5];
-        $imageCache = config('feed.imgCache');
+        $imageCache = config('feed.img_cache');
         $imageCacheFile = $imageCache . '/' . implode('/', $urlMd5) . '.jpg';
         if (!File::exists($imageCacheFile)) {
             self::downloadImage($picUrl, $imageCacheFile);

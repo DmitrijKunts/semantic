@@ -21,11 +21,11 @@
                             Описание
                         </div>
                     </div>
-                    <p class="leading-relaxed mb-4">
-                        {{ $good->desc }}
-                    </p>
+                    <div class="leading-relaxed mb-4">
+                        {!! Illuminate\Support\Str::of($good->desc)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
+                    </div>
 
-                    @isset($good->tech)
+                    @if ($good->tech != '')
                         <div class="flex mb-4">
                             <div class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
                                 Характеристики
@@ -37,9 +37,9 @@
                                 <span class="ml-auto text-gray-900">{!! $good->techDiv($tech, 1) !!}</span>
                             </div>
                         @endforeach
-                    @endisset
+                    @endif
 
-                    @isset($good->tech)
+                    @if ($good->tech != '')
                         <div class="flex mb-4">
                             <div class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
                                 Комплектация
@@ -50,7 +50,7 @@
                                 <span class="text-gray-500">{!! $equip !!}</span>
                             </div>
                         @endforeach
-                    @endisset
+                    @endif
 
 
 
@@ -75,7 +75,10 @@
         </div>
     </section>
 
-    @include('cats', ['catChilds' => $good->cats()->first()->brothersNotBlank(), 'catsAsKeys' => $good->name])
+    @include('cats', [
+        'catChilds' => $good->cats()->first()->brothersNotBlank(),
+        'catsAsKeys' => $good->name,
+    ])
 
     @include('goods', ['goods' => $good->brothers()])
 @endsection

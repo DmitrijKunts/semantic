@@ -1,11 +1,9 @@
 <?php
 
 return [
-    'api_key' => env('FEED_API_KEY', ''),
+    'api_token' => env('FEED_API_TOKEN', ''),
     'api_url' => env('FEED_API_URL', ''),
-    'geo' => env('FEED_GEO', 'ru'),
     'lang' => env('FEED_LANG', 'ru'),
-    'minPrice' => env('FEED_MIN_PRICE', 10),
-    'goodsCount' => env('FEED_GOODS_COUNT', 20),
-    'imgCache' => env('FEED_IMG_CACHE', '/var/www/image_cache'),
+    'goods_count' => env('FEED_GOODS_COUNT', 20),
+    'img_cache' => env('FEED_IMG_CACHE', '/var/www/image_cache'),
 ];

@@ -68,53 +68,47 @@ class Good extends Model
             : Str::words($this->desc, 10);
     }
 
-    public static function makeFromXML($xml, Cat $cat)
+    public static function makeFromJson($jsonString, Cat $cat)
     {
-        $xmlObject = simplexml_load_string($xml);
-        foreach ($xmlObject->offers->offer as $offer) {
-            $good = Good::where('code', (string)$offer->id)->first();
+        $json = json_decode($jsonString);
+        foreach ($json->offers as $offer) {
+            $good = Good::where('code', (string)$offer->code)->first();
             if (!$good) {
                 $tech = [];
-                foreach ($offer->tech_desc as $i) {
+                foreach ($offer->tech_desc ?? [] as $i) {
                     $tech[] = (string)$i;
                 }
                 $tech = implode(PHP_EOL, $tech);
 
                 $equip = [];
-                foreach ($offer->equip as $i) {
+                foreach ($offer->equip ?? [] as $i) {
                     $equip[] = (string)$i;
                 }
                 $equip = implode(PHP_EOL, $equip);
 
-                $pic = (string)$offer->picture;
-                if ($offer->pictures) {
-                    $pic = ($pic ? "$pic," : '') . (string)$offer->pictures;
-                }
-
-                $sku = (int)$offer->sku + 555;
+                $sku = genConst(9999999, app()->domain() . $offer->code);
 
                 $good =  Good::Create([
                     'sku' => $sku,
-                    'code' => (string)$offer->id,
+                    'code' => (string)$offer->code,
                     'name' => (string)$offer->name,
                     'link' => (string)$offer->url,
                     'slug' => Str::of($sku . ' ' . $offer->name)->slug('-'),
                     'price' => (float)$offer->price,
                     'currency' => (string)$offer->currencyId,
-                    'pictures' => $pic,
+                    'pictures' => (string)$offer->pictures,
                     'vendor' => (string)$offer->vendor,
-                    'vendor_url' => (string)$offer->vurl,
+                    'vendor_url' => (string)($offer->vurl ?? ''),
                     'model' => (string)$offer->model,
-                    'meta_keys' => (string)$offer->meta_keys,
-                    'meta_desc' => (string)$offer->meta_desc,
+                    'meta_keys' => (string)($offer->meta_keys ?? ''),
+                    'meta_desc' => (string)($offer->meta_desc ?? ''),
                     'desc' => (string)$offer->description,
-                    'desc_plus' => (string)$offer->description_plus,
+                    'desc_plus' => (string)($offer->description_plus ?? ''),
                     'tech' => $tech,
                     'equip' => $equip,
                 ]);
             }
             $good->cats()->syncWithoutDetaching($cat);
-            // dd($offer);
         }
     }
 }
