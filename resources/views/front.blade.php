@@ -19,7 +19,7 @@
 
 
                 @isset($cat->childs)
-                    @include('cats', ['catChilds' => $cat->childs()->limit(6)->get()])
+                    @include('cats', ['catChilds' => $cat->childsNotBlank()->limit(6)->get()])
                 @endisset
 
 
