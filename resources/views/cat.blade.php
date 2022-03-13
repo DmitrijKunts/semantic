@@ -23,15 +23,16 @@
                 @include('cats', ['catChilds' => $catChilds])
             @endisset
 
-            @isset($cat->goods)
+            @if (count($cat->goods) > 0)
                 @include('goods', ['goods' => $cat->goods, 'loadKeys' => $cat->calcKeysNotUsedWords()])
-            @endisset
+            @endif
 
             {{-- {{ $cat->keysNotUsedWords }} --}}
 
-            <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
-                {{ $cat->text }}
-            </p>
+            <div class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
+                {{-- {{ $cat->text }} --}}
+                {!! Illuminate\Support\Str::of($cat->text)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
+            </div>
 
         </div>
     </div>
