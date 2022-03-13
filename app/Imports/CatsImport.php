@@ -4,6 +4,8 @@ namespace App\Imports;
 
 use App\Models\Cat;
 use App\Models\Key;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\SkipsUnknownSheets;
@@ -58,15 +60,21 @@ class MapSheetImport implements OnEachRow
             }
             if ($col != '') {
                 $lastCol = $key;
-                $_name = $col;
+                $_name = trim($col);
             }
         }
         if ($_name != '') {
+            $text = '';
+            $textFile = storage_path("texts/$_name.txt");
+            if (File::exists($textFile)) {
+                $text = File::get($textFile);
+            }
             $pId = self::$levels[$lastCol - 1];
             $_c = Cat::firstOrCreate([
                 'p_id' => $pId,
                 'name' => $_name,
-                'slug' => self::genSlug($_name, $pId)
+                'slug' => self::genSlug($_name, $pId),
+                'text' => $text,
             ]);
 
             self::$levels[$lastCol] = $_c->id;
@@ -90,13 +98,13 @@ class ClusterSheetImport implements OnEachRow
     public function __construct($output)
     {
         $this->output = $output;
-        $this->output->info("$sheet importing...");
     }
 
     public function onRow(Row $row)
     {
         if (($sheet = $row->getDelegate()->getWorksheet()->getTitle()) == 'Справка') return;
         if ($row->getIndex() < 3) return;
+        // $this->output->info("$sheet importing...");
         if (Str::of($sheet)->endsWith('...')) {
             $cat = Cat::where('name', 'like', Str::of($sheet)->replace('...', '%'))->first();
         } else {
