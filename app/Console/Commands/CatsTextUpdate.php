@@ -40,14 +40,6 @@ class CatsTextUpdate extends Command
     public function handle()
     {
         $count = 0;
-        // foreach (Cat::all() as $cat) {
-        //     $textFile = storage_path("texts/{$cat->name}.txt");
-        //     if (File::exists($textFile)) {
-        //         $cat->text = File::get($textFile);
-        //         $cat->save();
-        //         $count++;
-        //     }
-        // }
         $this->withProgressBar(Cat::all(), function ($cat) use (&$count) {
             $textFile = storage_path("texts/{$cat->name}.txt");
             if (File::exists($textFile)) {
