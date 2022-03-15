@@ -27,6 +27,10 @@ Route::get('/robots.txt', function () {
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
+Route::get('/privacy-policy.html', function () {
+    return view('pp');
+})->name('pp');
+
 Route::get('/goods/{good:slug}.html', [GoodController::class, 'index'])->name('good');
 
 Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img');
