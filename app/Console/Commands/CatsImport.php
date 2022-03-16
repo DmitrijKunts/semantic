@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Imports\CatsImport;
+// use App\Imports\CatsImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ImportCats extends Command
+class CatsImport extends Command
 {
     /**
      * The name and signature of the console command.
@@ -40,7 +40,7 @@ class ImportCats extends Command
     public function handle()
     {
         $this->output->title('Starting import');
-        Excel::import(new CatsImport($this), storage_path('cats.xlsx'));
+        Excel::import(new \App\Imports\CatsImport($this), storage_path('cats.xlsx'));
         $this->output->success('Import successful');
         return 0;
     }
