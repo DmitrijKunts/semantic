@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         if (!app()->runningInConsole()) {
-            View::share('menu', Cat::where('p_id', -1)->limit(5)->get());
+            View::share('menu', Cat::where('p_id', -1)->limit(10)->get());
         }
     }
 }
