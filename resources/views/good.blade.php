@@ -73,7 +73,7 @@
                         </button>
                     </div>
                 </div>
-                <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                <img alt="{{ $good->name }}" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
                     src="{{ $good->picture() }}">
             </div>
         </div>
