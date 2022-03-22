@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Good;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BuyController extends Controller
@@ -37,6 +38,8 @@ class BuyController extends Controller
         if ($response->ok()) {
             return json_decode($response->body())[0];
         }
+        Log::warning("Teleport: " . $response->body());
+        Log::warning("Teleport link: " . $link);
         return $link;
     }
 }
