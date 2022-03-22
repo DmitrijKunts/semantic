@@ -16,6 +16,14 @@
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ $good->vendor }}</h2>
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ $good->model }}</h2>
                     <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ $good->name }}</h1>
+
+                    <div class="lg:hidden flex">
+                        <span class="title-font font-medium text-2xl text-gray-900">
+                            @include('price')
+                        </span>
+                        @include('buy')
+                    </div>
+
                     <div class="flex mb-4">
                         <div class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
                             {{ __('good.description') }}
@@ -58,10 +66,7 @@
                         <span class="title-font font-medium text-2xl text-gray-900">
                             @include('price')
                         </span>
-                        <button
-                            class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                            {{ __('good.buy') }}
-                        </button>
+                        @include('buy')
                         <button
                             class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

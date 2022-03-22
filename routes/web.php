@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuyController;
 use App\Http\Controllers\CatController;
 use App\Http\Controllers\GoodController;
 use App\Http\Controllers\ImageController;
@@ -32,6 +33,8 @@ Route::get('/privacy-policy.html', function () {
 })->name('pp');
 
 Route::get('/goods/{good:slug}.html', [GoodController::class, 'index'])->name('good');
+
+Route::put('/buy/{good:sku}', [BuyController::class, 'go'])->name('buy');
 
 Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img');
 Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img.small');

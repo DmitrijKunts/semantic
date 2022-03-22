@@ -46,3 +46,33 @@ if (!function_exists('scheme')) {
         }
     }
 }
+
+if (!function_exists('isBot')) {
+    function isBot()
+    {
+        $check_bot_is_bot = true;
+
+        $check_bot_host = Cache::store('fileshared')->remember(
+            'gethostbyaddr-' . request()->ip(),
+            60 * 60 * 24,
+            function () {
+                return gethostbyaddr(request()->ip());
+            }
+        );
+        // $check_bot_host = 'google.com';
+        // $check_bot_host = 'google-proxy-74-125-208-83.google.com ';
+
+        if (
+            // !preg_match('~localhost|google|bing|msn|yahoo|yandex|accoona|ask|bond|bot|crawler|curl|eltaindexer|ia_archiver|jeeves|nigma|proximic|rambler|spider|turtle|w3c_validator|webalta|wget|facebook|ahrefs~i', $check_bot_host)
+            !preg_match('~google|bing|msn|yahoo|yandex|accoona|ask|bond|bot|crawler|curl|eltaindexer|ia_archiver|jeeves|nigma|proximic|rambler|spider|turtle|w3c_validator|webalta|wget|facebook|ahrefs~i', $check_bot_host)
+            // || preg_match('~google-proxy-~i', $check_bot_host) //google-proxy - через него смотрят "глазами" гугла
+        ) {
+            // if (!preg_match('~google|bing|msn|yahoo|yandex|accoona|ask|bond|bot|crawler|curl|eltaindexer|ia_archiver|jeeves|nigma|proximic|rambler|spider|turtle|w3c_validator|webalta|wget|facebook|ahrefs~i', $check_bot_host)) {
+            $check_bot_is_bot = false;
+        }
+
+        // Log::info("IP:" . request()->ip() . ", host: $check_bot_host, bot: " . ($check_bot_is_bot ? 'yes' : 'no'));
+
+        return $check_bot_is_bot;
+    }
+}
