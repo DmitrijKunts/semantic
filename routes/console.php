@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
+use App\Models\Cat;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Artisan::command('cats:reset', function () {
+    Cat::query()->update(['feeded' => null]);
+    $this->info('Cats reseted.');
+})->purpose('Cats reset feeded time');
