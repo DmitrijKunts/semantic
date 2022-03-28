@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Cat;
+use App\Models\Good;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -18,3 +19,9 @@ Artisan::command('cats:reset', function () {
     Cat::query()->update(['feeded' => null]);
     $this->info('Cats reseted.');
 })->purpose('Cats reset feeded time');
+
+Artisan::command('goods:clear', function () {
+    Good::truncate();
+    Cat::query()->update(['feeded' => null]);
+    $this->info('Goods cleared.');
+})->purpose('Goods clear');
