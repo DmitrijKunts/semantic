@@ -71,6 +71,9 @@ class Good extends Model
     public static function makeFromJson($jsonString, Cat $cat)
     {
         $json = json_decode($jsonString);
+        if(!$json->success){
+            abort(500, $json->message);
+        }
         foreach ($json->offers as $offer) {
             $good = Good::where('code', (string)$offer->code)->first();
             if (!$good) {

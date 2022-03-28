@@ -17,6 +17,7 @@ class Feed
             'token' => config('feed.api_token'),
             'host' => app()->domain(),
             'ln' => config('feed.lang'),
+            'geo' => config('feed.geo'),
             'c' =>  config('feed.goods_count'),
         ];
     }
