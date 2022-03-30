@@ -34,12 +34,13 @@ class BuyController extends Controller
         $query['referer'] = request()->header('referer');
         $query['ip_addr'] = request()->ip();
         // $query['ip_addr'] = '188.163.15.253';
+        $query['subid'] = app()->domain();
         $response = Http::get($url, $query);
         if ($response->ok()) {
             return json_decode($response->body())[0];
         }
         Log::warning("Teleport: " . $response->body());
         Log::warning("Teleport link: " . $link);
-        return $link;
+        return $link . '&subid=' . urlencode(app()->domain());
     }
 }

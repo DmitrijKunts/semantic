@@ -63,7 +63,7 @@ class MapSheetImport implements OnEachRow
                 $_name = trim($col);
             }
         }
-        if ($_name != '') {
+        if ($_name ?? '' != '') {
             $text = '';
             $textFile = storage_path("texts/$_name.txt");
             if (File::exists($textFile)) {
