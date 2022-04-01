@@ -26,7 +26,7 @@ Artisan::command('cats:crawl', function () {
     $this->withProgressBar(Cat::all(), function ($cat) use ($cc) {
         $cc->index($cat);
     });
-    $this->info('Cats crawled.');
+    $this->info("\nCats crawled.");
 })->purpose('Cats crawl every node.');
 
 
