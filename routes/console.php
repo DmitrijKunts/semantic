@@ -3,6 +3,7 @@
 use App\Http\Controllers\CatController;
 use App\Models\Cat;
 use App\Models\Good;
+use App\Models\Snippet;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -29,6 +30,14 @@ Artisan::command('cats:crawl', function () {
     $this->info("\nCats crawled.");
 })->purpose('Cats crawl every node.');
 
+
+
+Artisan::command('keys:snippet', function () {
+    $this->output->title('Starting import snippets to keys');
+    Snippet::query()->truncate();
+    Excel::import(new \App\Imports\SnippetImport, storage_path('serp.xlsx'));
+    $this->output->success('Import successful');
+})->purpose('Import snippets to keys');
 
 
 Artisan::command('goods:clear', function () {

@@ -30,7 +30,7 @@
             {{-- {{ $cat->keysNotUsedWords }} --}}
 
             <div class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
-                {{-- {{ $cat->text }} --}}
+                {!! $cat->snippet2Text()->map(fn($i) => "<p>$i</p>")->join("\n") !!}
                 {!! Illuminate\Support\Str::of($cat->text)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
             </div>
 

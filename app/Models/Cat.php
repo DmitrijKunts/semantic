@@ -119,4 +119,17 @@ class Cat extends Model
         // return $this->belongsToMany(Good::class)->orderBy('name');
         return $this->belongsToMany(Good::class)->orderByRaw(config('feed.goods_order', 'name'));
     }
+
+    public function snippet2Text()
+    {
+        $res = collect([]);
+        foreach ($this->keys as $key) {
+            $_snippets = [];
+            foreach ($key->snippets as $snippet) {
+                $_snippets[] = $snippet->snippet;
+            }
+            $res = $res->merge(collect(constSort($_snippets, 'snippets' . $key->name))->slice(0, 2));
+        }
+        return $res->unique();
+    }
 }

@@ -25,7 +25,7 @@ class CatsImport implements WithMultipleSheets, SkipsUnknownSheets
     public function sheets(): array
     {
         $res = [];
-        foreach (range(1, 1000) as $k => $v) {
+        foreach (range(1, 10000) as $k => $v) {
             $res[$k] = new ClusterSheetImport($this->output);
         }
         $res[0] = new MapSheetImport($this->output);

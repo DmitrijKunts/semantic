@@ -16,4 +16,9 @@ class Key extends Model
     {
         return $this->belongsTo(Cat::class);
     }
+
+    public function snippets()
+    {
+        return $this->hasMany(Snippet::class);
+    }
 }
