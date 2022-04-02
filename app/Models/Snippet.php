@@ -42,6 +42,9 @@ class Snippet extends Model
             'Touch' => '',
             'e-Katalog' => '',
         ];
+        if (config('app.locale') == 'en') {
+            $filters['[а-я]'] = '';
+        }
 
         $str = Str::of($str);
         foreach ($filters as $p => $r) {

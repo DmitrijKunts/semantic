@@ -128,7 +128,7 @@ class Cat extends Model
             foreach ($key->snippets as $snippet) {
                 $_snippets[] = $snippet->snippet;
             }
-            $res = $res->merge(collect(constSort($_snippets, 'snippets' . $key->name))->slice(0, 2));
+            $res = $res->merge(collect(constSort($_snippets, 'snippets' . $key->name))->slice(0, 3));
         }
         return $res->unique();
     }
