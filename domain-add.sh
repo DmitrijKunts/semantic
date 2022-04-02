@@ -9,5 +9,5 @@ sudo nginx -t && sudo service nginx reload
 php artisan domain:add $1
 sudo chown -R www-data storage
 sudo chmod a+rw -R storage
-php artisan migrate --domain=$1
+php artisan migrate --domain=$1 --force
 
