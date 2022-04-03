@@ -41,6 +41,7 @@ class Snippet extends Model
             'Magazilla' => '',
             'Touch' => '',
             'e-Katalog' => '',
+            '\.\.\.' => '',
         ];
         if (config('app.locale') == 'en') {
             $filters['[а-я]'] = '';
