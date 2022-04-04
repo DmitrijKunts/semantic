@@ -45,3 +45,11 @@ Artisan::command('goods:clear', function () {
     Cat::query()->update(['feeded' => null]);
     $this->info('Goods cleared.');
 })->purpose('Goods clear');
+
+
+Artisan::command('make', function () {
+    $this->call('migrate:fresh', ['--force']);
+    $this->call('cats:import');
+    $this->call('keys:snippet');
+    $this->call('cats:crawl');
+})->purpose('Make all');
