@@ -50,6 +50,11 @@ class Snippet extends Model
         if (config('app.locale') == 'en') {
             $filters['[а-я]'] = '';
         }
+        if (config('feed.geo') == 'ru') {
+            $filters['Украине'] = '';
+            $filters['грн\.'] = '';
+            $filters['₴'] = '';
+        }
 
         $str = Str::of($str);
         foreach ($filters as $p => $r) {
