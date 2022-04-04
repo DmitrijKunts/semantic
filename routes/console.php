@@ -23,6 +23,7 @@ Artisan::command('cats:reset', function () {
 })->purpose('Cats reset feeded time');
 
 Artisan::command('cats:crawl', function () {
+    Cat::query()->update(['feeded' => null]);
     $cc = new CatController;
     $this->withProgressBar(Cat::all(), function ($cat) use ($cc) {
         $cc->index($cat);
