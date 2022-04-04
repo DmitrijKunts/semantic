@@ -38,6 +38,7 @@ class Snippet extends Model
             '[a-z0-9]+\.[a-z]+\.[a-z]+' => '',
             '[a-z0-9]+\.[a-z]+' => '',
             '\d-\d{3}-\d{3}-\d{3}' => '',
+            '\d \d{3} \d{3}' => '',
             'Magazilla' => '',
             'Touch' => '',
             'e-Katalog' => '',
