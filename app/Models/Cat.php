@@ -123,7 +123,8 @@ class Cat extends Model
     public function snippet2Text()
     {
         $res = collect([]);
-        foreach ($this->keys as $key) {
+        $keys = collect(constSort($this->keys, 'keys_snippets' . $this->name))->slice(0, 10);
+        foreach ($keys  as $key) {
             $_snippets = [];
             foreach ($key->snippets as $snippet) {
                 $_snippets[] = $snippet->snippet;
