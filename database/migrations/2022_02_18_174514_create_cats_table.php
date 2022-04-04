@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('p_id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->string('sheet')->unique();
             $table->text('text')->nullable();
             $table->dateTime('feeded')->nullable();
 

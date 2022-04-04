@@ -14,7 +14,7 @@ class Cat extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['id', 'p_id', 'name', 'slug', 'text'];
+    protected $fillable = ['id', 'p_id', 'name', 'slug', 'text', 'sheet'];
 
     public function canonical()
     {

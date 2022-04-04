@@ -5,8 +5,6 @@ namespace App\Imports;
 use App\Models\Cat;
 use App\Models\Key;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\SkipsUnknownSheets;
 use Illuminate\Support\Str;
@@ -50,32 +48,51 @@ class MapSheetImport implements OnEachRow
         $this->output->info("Cats importing...");
     }
 
+    public function extractName($cell)
+    {
+        $cell = Str::of($cell);
+        $name = (string)$cell->match('~, "(.+?)"\)~u');
+        $sheet = (string)$cell->match('~"#"&"\'(.+?)\'!~u');
+        if ($name == '') {
+            $name = (string)$cell;
+            $sheet = (string)$cell;
+        }
+        return [$name, $sheet];
+    }
+
     public function onRow(Row $row)
     {
-        $row = $row->toArray();
+        $_row = $row->toArray();
         $lastCol = -1;
-        foreach ($row as $key => $col) {
+        $_name = '';
+        $_sheet = '';
+        foreach ($_row as $key => $col) {
             if ($key == 0) {
                 continue;
             }
             if ($col != '') {
                 $lastCol = $key;
-                $_name = trim($col);
+                list($_name, $_sheet) = $this->extractName($col);
             }
         }
-        if ($_name ?? '' != '') {
+        if ($_name != '') {
             $text = '';
             $textFile = storage_path("texts/$_name.txt");
             if (File::exists($textFile)) {
                 $text = File::get($textFile);
             }
             $pId = self::$levels[$lastCol - 1];
-            $_c = Cat::firstOrCreate([
-                'p_id' => $pId,
-                'name' => $_name,
-                'slug' => self::genSlug($_name, $pId),
-                'text' => $text,
-            ]);
+            $_c = Cat::updateOrCreate(
+                [
+                    'p_id' => $pId,
+                    'name' => $_name
+                ],
+                [
+                    'slug' => self::genSlug($_name, $pId),
+                    'sheet' => $_sheet,
+                    'text' => $text,
+                ]
+            );
 
             self::$levels[$lastCol] = $_c->id;
         }
@@ -84,7 +101,7 @@ class MapSheetImport implements OnEachRow
     public static function genSlug($name, $pId)
     {
         $slug = Str::of($name)->slug('-');
-        if (Cat::where('slug', $slug)->exists()) {
+        if (Cat::where('slug', $slug)->where('name', '<>', $name)->exists()) {
             return Str::of("$name $pId")->slug('-');
         }
         return $slug;
@@ -104,12 +121,7 @@ class ClusterSheetImport implements OnEachRow
     {
         if (($sheet = $row->getDelegate()->getWorksheet()->getTitle()) == 'Справка') return;
         if ($row->getIndex() < 3) return;
-        // $this->output->info("$sheet importing...");
-        if (Str::of($sheet)->endsWith('...')) {
-            $cat = Cat::where('name', 'like', Str::of($sheet)->replace('...', '%'))->first();
-        } else {
-            $cat = Cat::where('name', $sheet)->first();
-        }
+        $cat = Cat::firstWhere('sheet', $sheet);
 
         if (!$cat) return;
         $row = $row->toArray();
