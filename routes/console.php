@@ -48,7 +48,7 @@ Artisan::command('goods:clear', function () {
 
 
 Artisan::command('make', function () {
-    $this->call('migrate:fresh', ['--force']);
+    $this->call('migrate:fresh', ['--force' => 1]);
     $this->call('cats:import');
     $this->call('keys:snippet');
     $this->call('cats:crawl');
