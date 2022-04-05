@@ -37,8 +37,6 @@ class Snippet extends Model
             'Фокстрот' => '',
             '[a-z0-9]+\.[a-z]+\.[a-z]+' => '',
             '[a-z0-9]+\.[a-z]+' => '',
-            '\d-\d{3}-\d{3}-\d{3}' => '',
-            '\d \d{3} \d{3}' => '',
             'Magazilla' => '',
             'Touch' => '',
             'e-Katalog' => '',
@@ -46,6 +44,8 @@ class Snippet extends Model
             '\(\d{3}\) \d \d{3} \d{3}' => '',
             '\(\d{3}\) \d{3}-\d{2}-\d{2}' => '',
             '\(\d{3}\)\d{3}-\d{2}-\d{2}' => '',
+            '\d-\d{3}-\d{3}-\d{3}' => '',
+            '\d \d{3} \d{3}' => '',
         ];
         if (config('app.locale') == 'en') {
             $filters['[а-я]'] = '';

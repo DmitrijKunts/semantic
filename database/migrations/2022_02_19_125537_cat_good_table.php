@@ -17,6 +17,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cat_id')->constrained()->cascadeOnDelete();
             $table->foreignId('good_id')->constrained()->cascadeOnDelete();
+            $table->float('rank')->default(5);
+
+            $table->index('cat_id');
+            $table->index(['cat_id', 'rank']);
+            $table->index(['cat_id', 'good_id']);
+            $table->index('good_id');
+            $table->index('rank');
             // $table->timestamps();
         });
     }

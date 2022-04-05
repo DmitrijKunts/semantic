@@ -6,6 +6,6 @@ return [
     'lang' => env('FEED_LANG', 'en'),
     'geo' => env('FEED_GEO', 'en'),
     'goods_count' => env('FEED_GOODS_COUNT', 20),
-    'goods_order' => env('FEED_GOODS_ORDER', 'name'),
+    'goods_order' => env('FEED_GOODS_ORDER', 'cat_good.rank'),
     'img_cache' => env('FEED_IMG_CACHE', '/var/www/image_cache'),
 ];

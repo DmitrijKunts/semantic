@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('cat_id')->constrained();
             $table->string('name')->uniq();
 
+            $table->index('cat_id');
             $table->index(['cat_id', 'name']);
         });
     }

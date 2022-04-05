@@ -116,8 +116,7 @@ class Cat extends Model
 
     public function goods()
     {
-        // return $this->belongsToMany(Good::class)->orderBy('name');
-        return $this->belongsToMany(Good::class)->orderByRaw(config('feed.goods_order', 'name'));
+        return $this->belongsToMany(Good::class)->orderByRaw(config('feed.goods_order'));
     }
 
     public function snippet2Text()

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Good extends Model
@@ -71,7 +72,7 @@ class Good extends Model
     public static function makeFromJson($jsonString, Cat $cat)
     {
         $json = json_decode($jsonString);
-        if(!$json->success){
+        if (!$json->success) {
             abort(500, $json->message);
         }
         foreach ($json->offers as $offer) {
@@ -112,6 +113,10 @@ class Good extends Model
                 ]);
             }
             $good->cats()->syncWithoutDetaching($cat);
+            DB::table('cat_good')
+                ->where('cat_id', $cat->id)
+                ->where('good_id', $good->id)
+                ->update(['rank' => (string)$offer->rank]);
         }
     }
 }
