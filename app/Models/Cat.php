@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Cat extends Model
@@ -121,15 +122,17 @@ class Cat extends Model
 
     public function snippet2Text()
     {
-        $res = collect([]);
-        $keys = collect(constSort($this->keys, 'keys_snippets' . $this->name))->slice(0, 10);
-        foreach ($keys  as $key) {
-            $_snippets = [];
-            foreach ($key->snippets as $snippet) {
-                $_snippets[] = $snippet->snippet;
+        return Cache::rememberForever('snippet_' . $this->id, function () {
+            $res = collect([]);
+            $keys = collect(constSort($this->keys, 'keys_snippets' . $this->name))->slice(0, 10);
+            foreach ($keys  as $key) {
+                $_snippets = [];
+                foreach ($key->snippets as $snippet) {
+                    $_snippets[] = $snippet->snippet;
+                }
+                $res = $res->merge(collect(constSort($_snippets, 'snippets' . $key->name))->slice(0, 3));
             }
-            $res = $res->merge(collect(constSort($_snippets, 'snippets' . $key->name))->slice(0, 3));
-        }
-        return $res->unique();
+            return $res->unique();
+        });
     }
 }

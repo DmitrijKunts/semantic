@@ -6,6 +6,7 @@ use App\Feed;
 use App\Models\Cat;
 use App\Models\Good;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class CatController extends Controller
 {
@@ -14,7 +15,7 @@ class CatController extends Controller
         return view('front');
     }
 
-    public function index(Cat $cat)
+    public function index(Cat $cat, $crawl = false)
     {
         $catChilds = null;
         if ($cat->childs->count() == 0 && $cat->feeded == null) {
@@ -35,6 +36,10 @@ class CatController extends Controller
                 })
                 ->get();
         }
+        if ($crawl) return;
+        // return Cache::rememberForever('cat_' . $cat->id, function () {
+
+        // });
         return view('cat', compact('cat', 'catChilds'));
     }
 }

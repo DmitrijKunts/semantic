@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 // use App\Imports\CatsImport;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CatsImport extends Command
@@ -41,6 +42,7 @@ class CatsImport extends Command
     {
         $this->output->title('Starting import');
         Excel::import(new \App\Imports\CatsImport($this), storage_path('cats.xlsx'));
+        Cache::flush();
         $this->output->success('Import successful');
         return 0;
     }
