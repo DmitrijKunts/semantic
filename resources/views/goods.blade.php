@@ -40,6 +40,9 @@
             @endforeach
 
         </div>
-        {{ $goods->links() }}
+        @if (method_exists($goods, 'links'))
+            {{ $goods->links() }}
+        @endif
+
     </div>
 </div>

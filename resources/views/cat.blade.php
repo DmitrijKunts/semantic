@@ -1,8 +1,8 @@
 @extends('app')
 
 @php
-    $page = request()->input('page');
-    $page = $page ? " #$page" : '';
+$page = request()->input('page');
+$page = $page ? " #$page" : '';
 @endphp
 @section('title', $cat->name . "$page - " . config('app.name'))
 
@@ -28,7 +28,10 @@
             @endisset
 
             @if (count($cat->goods) > 0)
-                @include('goods', ['goods' => $cat->goods()->paginate(), 'loadKeys' => $cat->calcKeysNotUsedWords()])
+                @include('goods', [
+                    'goods' => $cat->goods()->paginate(),
+                    'loadKeys' => $cat->calcKeysNotUsedWords(),
+                ])
             @endif
 
             {{-- {{ $cat->keysNotUsedWords }} --}}

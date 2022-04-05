@@ -7,7 +7,7 @@ use App\Models\Snippet;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 
-Artisan::command('domain:down', function () {
+Artisan::command('domains:down', function () {
     $this->call('down', [], $this->output);
     foreach (config('domain.domains') as $domain) {
         File::copy(
@@ -19,15 +19,15 @@ Artisan::command('domain:down', function () {
             storage_path(domain_sanitized($domain) . '/framework/down')
         );
     }
-})->purpose('All domain down.');
+})->purpose('All domains down.');
 
-Artisan::command('domain:up', function () {
+Artisan::command('domains:up', function () {
     $this->call('up', [], $this->output);
     foreach (config('domain.domains') as $domain) {
         File::delete(storage_path(domain_sanitized($domain) . '/framework/maintenance.php'));
         File::delete(storage_path(domain_sanitized($domain) . '/framework/down'));
     }
-})->purpose('All domain up.');
+})->purpose('All domains up.');
 
 
 Artisan::command('cats:reset', function () {
