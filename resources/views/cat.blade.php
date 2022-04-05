@@ -1,6 +1,10 @@
 @extends('app')
 
-@section('title', $cat->name . ' - ' . config('app.name'))
+@php
+    $page = request()->input('page');
+    $page = $page ? " #$page" : '';
+@endphp
+@section('title', $cat->name . "$page - " . config('app.name'))
 
 @section('canonical')
     <link rel="canonical" href="{{ $cat->canonical() }}" />
