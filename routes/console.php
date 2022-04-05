@@ -5,6 +5,7 @@ use App\Models\Cat;
 use App\Models\Good;
 use App\Models\Snippet;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 
 Artisan::command('domain:down', function () {
     $this->call('down', [], $this->output);
@@ -38,7 +39,7 @@ Artisan::command('cats:crawl', function () {
     Cat::query()->update(['feeded' => null]);
     $cc = new CatController;
     $this->withProgressBar(Cat::all(), function ($cat) use ($cc) {
-        $cc->index($cat);
+        $cc->index($cat, true);
     });
     $this->info("\nCats crawled.");
 })->purpose('Cats crawl every node.');
@@ -49,6 +50,7 @@ Artisan::command('keys:snippet', function () {
     $this->output->title('Starting import snippets to keys');
     Snippet::query()->truncate();
     Excel::import(new \App\Imports\SnippetImport, storage_path('serp.xlsx'));
+    Cache::flush();
     $this->output->success('Import successful');
 })->purpose('Import snippets to keys');
 

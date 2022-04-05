@@ -24,7 +24,7 @@
             @endisset
 
             @if (count($cat->goods) > 0)
-                @include('goods', ['goods' => $cat->goods, 'loadKeys' => $cat->calcKeysNotUsedWords()])
+                @include('goods', ['goods' => $cat->goods()->paginate(), 'loadKeys' => $cat->calcKeysNotUsedWords()])
             @endif
 
             {{-- {{ $cat->keysNotUsedWords }} --}}
