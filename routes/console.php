@@ -6,16 +6,28 @@ use App\Models\Good;
 use App\Models\Snippet;
 use Illuminate\Support\Facades\Artisan;
 
-/*
-|--------------------------------------------------------------------------
-| Console Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of your Closure based console
-| commands. Each Closure is bound to a command instance allowing a
-| simple approach to interacting with each command's IO methods.
-|
-*/
+Artisan::command('domain:down', function () {
+    $this->call('down', [], $this->output);
+    foreach (config('domain.domains') as $domain) {
+        File::copy(
+            storage_path('framework/maintenance.php'),
+            storage_path(domain_sanitized($domain) . '/framework/maintenance.php')
+        );
+        File::copy(
+            storage_path('framework/down'),
+            storage_path(domain_sanitized($domain) . '/framework/down')
+        );
+    }
+})->purpose('All domain down.');
+
+Artisan::command('domain:up', function () {
+    $this->call('up', [], $this->output);
+    foreach (config('domain.domains') as $domain) {
+        File::delete(storage_path(domain_sanitized($domain) . '/framework/maintenance.php'));
+        File::delete(storage_path(domain_sanitized($domain) . '/framework/down'));
+    }
+})->purpose('All domain up.');
+
 
 Artisan::command('cats:reset', function () {
     Cat::query()->update(['feeded' => null]);
