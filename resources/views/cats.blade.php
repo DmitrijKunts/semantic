@@ -13,3 +13,8 @@
         </div>
     @endforeach
 </div>
+<div class="container lg:w-4/5 sm:mx-auto -mx-2">
+    @if (method_exists($catChilds, 'links'))
+        {{ $catChilds->links() }}
+    @endif
+</div>

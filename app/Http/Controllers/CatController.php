@@ -34,7 +34,7 @@ class CatController extends Controller
                                 ->whereColumn('c.p_id', 'cats.id');
                         }, '>', 0);
                 })
-                ->get();
+                ->paginate(30);
         }
         if ($crawl) return;
         // return Cache::rememberForever('cat_' . $cat->id, function () {

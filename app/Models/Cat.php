@@ -111,6 +111,7 @@ class Cat extends Model
                             ->whereColumn('c.p_id', 'cats.id');
                     }, '>', 0);
             })
+            ->limit(20)
             ->get();
         // return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->get();
     }
