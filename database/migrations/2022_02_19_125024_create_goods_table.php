@@ -17,7 +17,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->id();
-            $table->string('sku')->unique();
+            $table->string('sku');
             $table->string('code')->unique();
             $table->string('link');
             $table->string('name');
