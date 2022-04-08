@@ -2,6 +2,9 @@
 
 @php
 $page = request()->input('page');
+if (!$page) {
+    $page = request()->input('cat_page');
+}
 $page = $page ? " #$page" : '';
 @endphp
 @section('title', $cat->name . "$page - " . config('app.name'))
