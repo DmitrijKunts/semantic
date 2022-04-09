@@ -16,7 +16,7 @@ class BuyController extends Controller
         if (isBot()) {
             return back();
         } else {
-            return redirect(static::teleport($good->link));
+            return redirect(static::teleport($good->link, 'banner'));
         }
     }
 
@@ -25,11 +25,11 @@ class BuyController extends Controller
         if (isBot()) {
             return back();
         } else {
-            return redirect(static::teleport(Banner::getBannerUrl($id)));
+            return redirect(static::teleport(Banner::getBannerUrl($id, 'buy')));
         }
     }
 
-    private static function teleport($link)
+    private static function teleport($link, $subid1 = '')
     {
         $parts = parse_url($link);
         parse_str($parts['query'], $query);
@@ -45,6 +45,7 @@ class BuyController extends Controller
         $query['ip_addr'] = request()->ip();
         // $query['ip_addr'] = '188.163.15.253';
         $query['subid'] = app()->domain();
+        if ($subid1) $query['subid1'] = $subid1;
         $response = Http::get($url, $query);
         if ($response->ok()) {
             return json_decode($response->body())[0];
