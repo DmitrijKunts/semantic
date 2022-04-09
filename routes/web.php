@@ -41,3 +41,9 @@ Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->wh
 Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img.small');
 
 Route::get('/{cat:slug}.html', [CatController::class, 'index'])->name('cat');
+
+Route::get('{any?}', function () {
+    if (app() - domain() == 'atletikclub.ru') {
+        dd(request());
+    }
+})->where('any', '.*');
