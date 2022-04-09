@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use App\Models\Good;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -16,6 +17,15 @@ class BuyController extends Controller
             return back();
         } else {
             return redirect(static::teleport($good->link));
+        }
+    }
+
+    public function banner($id)
+    {
+        if (isBot()) {
+            return back();
+        } else {
+            return redirect(static::teleport(Banner::getBannerUrl($id)));
         }
     }
 

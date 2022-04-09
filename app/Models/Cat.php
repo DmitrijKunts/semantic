@@ -28,17 +28,21 @@ class Cat extends Model
 
     public function childsNotBlank()
     {
-        return Cat::withCount('goods')
-            ->where('p_id',  $this->id)
-            ->where(function ($query) {
-                $query->where('feeded', null)
-                    ->orWhere('goods_count', '>', 0)
-                    ->orWhere(function ($query) {
-                        $query->selectRaw('count(*)')
-                            ->from('cats as c')
-                            ->whereColumn('c.p_id', 'cats.id');
-                    }, '>', 0);
-            });
+        if (getBanner()) {
+            return $this->childs();
+        } else {
+            return Cat::withCount('goods')
+                ->where('p_id',  $this->id)
+                ->where(function ($query) {
+                    $query->where('feeded', null)
+                        ->orWhere('goods_count', '>', 0)
+                        ->orWhere(function ($query) {
+                            $query->selectRaw('count(*)')
+                                ->from('cats as c')
+                                ->whereColumn('c.p_id', 'cats.id');
+                        }, '>', 0);
+                });
+        }
     }
 
     public function childs()
@@ -113,7 +117,7 @@ class Cat extends Model
             })
             ->limit(20)
             ->get();
-        // return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->get();
+        // return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->limit(20)->get();
     }
 
     public function goods()

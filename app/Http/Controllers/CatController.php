@@ -23,23 +23,25 @@ class CatController extends Controller
             $cat->feeded = now();
             $cat->save();
         } else {
-            $catChilds = Cat::withCount('goods')
-                ->where('p_id',  $cat->id)
-                ->where(function ($query) {
-                    $query->where('feeded', null)
-                        ->orWhere('goods_count', '>', 0)
-                        ->orWhere(function ($query) {
-                            $query->selectRaw('count(*)')
-                                ->from('cats as c')
-                                ->whereColumn('c.p_id', 'cats.id');
-                        }, '>', 0);
-                })
-                ->paginate(30, pageName: 'cat_page');
+            if (getBanner()) {
+                $catChilds = $cat->childs()->paginate(30, pageName: 'cat_page');
+            } else {
+                $catChilds = Cat::withCount('goods')
+                    ->where('p_id',  $cat->id)
+                    ->where(function ($query) {
+                        $query->where('feeded', null)
+                            ->orWhere('goods_count', '>', 0)
+                            ->orWhere(function ($query) {
+                                $query->selectRaw('count(*)')
+                                    ->from('cats as c')
+                                    ->whereColumn('c.p_id', 'cats.id');
+                            }, '>', 0);
+                    })
+                    ->paginate(30, pageName: 'cat_page');
+            }
         }
         if ($crawl) return;
-        // return Cache::rememberForever('cat_' . $cat->id, function () {
 
-        // });
         return view('cat', compact('cat', 'catChilds'));
     }
 }

@@ -24,7 +24,9 @@ $page = $page ? " #$page" : '';
                 </h1>
             </div>
 
-            {{-- {{ $cat->keysNotUsedWords }} --}}
+            @if (!isBot())
+                {!! getBanner() !!}
+            @endif
 
             @isset($catChilds)
                 @include('cats', ['catChilds' => $catChilds])

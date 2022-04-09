@@ -35,6 +35,7 @@ Route::get('/privacy-policy.html', function () {
 Route::get('/goods/{good:slug}.html', [GoodController::class, 'index'])->name('good');
 
 Route::put('/buy/{good:sku}', [BuyController::class, 'go'])->name('buy');
+Route::put('/banner/{id}', [BuyController::class, 'banner'])->whereNumber('id')->name('banner');
 
 Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img');
 Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img.small');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Banner;
+
 if (!function_exists('constGen')) {
     function genConst($val, $noise = '')
     {
@@ -74,5 +76,12 @@ if (!function_exists('isBot')) {
         // Log::info("IP:" . request()->ip() . ", host: $check_bot_host, bot: " . ($check_bot_is_bot ? 'yes' : 'no'));
 
         return $check_bot_is_bot;
+    }
+}
+
+if (!function_exists('getBanner')) {
+    function getBanner()
+    {
+        return Banner::getBanner();
     }
 }
