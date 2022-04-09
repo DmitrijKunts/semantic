@@ -10,14 +10,18 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $cats = Cat::withCount('goods')
-            ->where('goods_count', '>', 0)
-            ->orWhere(function ($query) {
-                $query->selectRaw('count(*)')
-                    ->from('cats as c')
-                    ->whereColumn('c.p_id', 'cats.id');
-            }, '>', 0)
-            ->get();
+        if (getBanner()) {
+            $cats = Cat::all();
+        } else {
+            $cats = Cat::withCount('goods')
+                ->where('goods_count', '>', 0)
+                ->orWhere(function ($query) {
+                    $query->selectRaw('count(*)')
+                        ->from('cats as c')
+                        ->whereColumn('c.p_id', 'cats.id');
+                }, '>', 0)
+                ->get();
+        }
         $goods = Good::all();
         return response()
             ->view('sitemap', compact('cats', 'goods'))
