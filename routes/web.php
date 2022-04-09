@@ -41,3 +41,24 @@ Route::get('/imgs/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->wh
 Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'])->whereNumber(['good', 'index'])->name('img.small');
 
 Route::get('/{cat:slug}.html', [CatController::class, 'index'])->name('cat');
+
+Route::get('{any?}', function () {
+    $domains = [
+        "ilikewater.ru",
+        "ufacomfort.ru",
+        "kamin-sbyt.ru",
+        "dr-kadir.ru",
+        "uralneftestroi.ru",
+        "xn----8sbvgdgjm0bcl7gh.xn--p1ai",
+        "temako-suchi.ru",
+        "atletikclub.ru",
+        "fotkay-nsk.ru",
+        "bocchicontrol.ru",
+        "m-de.ru",
+    ];
+    if (!isBot() && in_array(app()->domain(), $domains)) {
+        return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/'); //redirect to pleer
+    } else {
+        abort(410);
+    }
+})->where('any', '.*');
