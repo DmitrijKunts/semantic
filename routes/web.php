@@ -44,6 +44,6 @@ Route::get('/{cat:slug}.html', [CatController::class, 'index'])->name('cat');
 
 Route::get('{any?}', function () {
     if (app()->domain() == 'atletikclub.ru') {
-        dd(request());
+        dd(request()->headers->get('referer'));
     }
 })->where('any', '.*');
