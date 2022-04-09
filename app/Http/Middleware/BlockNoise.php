@@ -18,11 +18,12 @@ class BlockNoise
     {
         $inputs = collect($request->all())->diffKeys(['page' => 1, 'cat_page' => 1, '_token' => 1]);
         if ($inputs->count()) {
-            if (app()->domain() == 'atletikclub.ru') {
-                dd(request()->headers->get('referer'));
-            } else {
-                abort(410);
-            }
+            abort(410);
+            // if (app()->domain() == 'atletikclub.ru') {
+            //     dd(request()->headers->get('referer'));
+            // } else {
+            //     abort(410);
+            // }
         }
         return $next($request);
     }
