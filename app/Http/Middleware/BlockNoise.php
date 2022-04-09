@@ -18,7 +18,6 @@ class BlockNoise
     {
         $inputs = collect($request->all())->diffKeys(['page' => 1, 'cat_page' => 1, '_token' => 1]);
         if ($inputs->count()) {
-            abort(410);
             $domains = [
                 "ilikewater.ru",
                 "ufacomfort.ru",
@@ -29,7 +28,7 @@ class BlockNoise
                 "temako-suchi.ru",
                 "atletikclub.ru",
             ];
-            dd(app()->domain());
+            // dd(app()->domain());
 
             if (!isBot() && in_array(app()->domain(), $domains)) {
                 return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/');//redirect to pleer
