@@ -28,9 +28,10 @@ class CatController extends Controller
             } else {
                 $catChilds = Cat::withCount('goods')
                     ->where('p_id',  $cat->id)
-                    ->where(function ($query) {
+                    ->where(function ($query) use ($cat) {
                         $query->where('feeded', null)
-                            ->orWhere('goods_count', '>', 0)
+                            // ->orWhere('goods_count', '>', 0)//т.к. не работет с пагинацией
+                            ->orWhereRaw('(select count(*) from "goods" inner join "cat_good" on "goods"."id" = "cat_good"."good_id" where "cats"."id" = "cat_good"."cat_id")>0') //т.к. не работет с пагинацией
                             ->orWhere(function ($query) {
                                 $query->selectRaw('count(*)')
                                     ->from('cats as c')
