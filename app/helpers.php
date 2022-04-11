@@ -99,8 +99,12 @@ if (!function_exists('pleerRedirect')) {
             "bocchicontrol.ru",
             "m-de.ru",
         ];
-        if (!isBot() && in_array(app()->domain(), $domains)) {
-            return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/'); //redirect to pleer
+        if (in_array(app()->domain(), $domains)) {
+            if (!isBot()) {
+                return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/'); //redirect to pleer
+            } else {
+                abort(503);
+            }
         } else {
             abort(410);
         }
