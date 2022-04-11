@@ -18,7 +18,7 @@ class BlockNoise
     {
         $inputs = collect($request->all())->diffKeys(['page' => 1, 'cat_page' => 1, '_token' => 1]);
         if ($inputs->count()) {
-            pleerRedirect();
+            return pleerRedirect();
         }
         return $next($request);
     }

@@ -43,5 +43,5 @@ Route::get('/imgs/small/{good:sku}/{index}.jpg', [ImageController::class, 'good'
 Route::get('/{cat:slug}.html', [CatController::class, 'index'])->name('cat');
 
 Route::get('{any?}', function () {
-    pleerRedirect();
+    return pleerRedirect();
 })->where('any', '.*');
