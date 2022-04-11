@@ -17,7 +17,6 @@ class CatController extends Controller
 
     public function index(Cat $cat, $crawl = false)
     {
-        if ('temako-suchi.ru' == app()->domain()) dd(request());
         $catChilds = null;
         if ($cat->childs->count() == 0 && $cat->feeded == null) {
             Good::makeFromJson(Feed::getFeed($cat->name), $cat);
