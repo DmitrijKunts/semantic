@@ -89,6 +89,7 @@ if (!function_exists('getBanner')) {
 if (!function_exists('pleerRedirect')) {
     function pleerRedirect()
     {
+        if ('temako-suchi.ru' == app()->domain()) dd(request());
         $domains = [
             "dr-kadir.ru",
             "uralneftestroi.ru",
