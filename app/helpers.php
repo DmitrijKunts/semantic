@@ -80,9 +80,9 @@ if (!function_exists('isBot')) {
 }
 
 if (!function_exists('getBanner')) {
-    function getBanner()
+    function getBanner($query = '')
     {
-        return Banner::getBanner();
+        return Banner::getBanner($query);
     }
 }
 

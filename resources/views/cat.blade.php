@@ -25,7 +25,7 @@ $page = $page ? " #$page" : '';
             </div>
 
             @if (!isBot())
-                {!! getBanner() !!}
+                {!! getBanner($cat->name) !!}
             @endif
 
             @isset($catChilds)

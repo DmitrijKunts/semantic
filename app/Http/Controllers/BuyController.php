@@ -25,7 +25,7 @@ class BuyController extends Controller
         if (isBot()) {
             return back();
         } else {
-            return redirect(static::teleport(Banner::getBannerUrl($id, 'buy')));
+            return redirect(static::teleport(Banner::getBannerUrl($id, request()->input('query')), 'buy'));
         }
     }
 
@@ -40,9 +40,10 @@ class BuyController extends Controller
             Str::replace('/g/', '/tptv2/', $parts['path']),
         ])->join('');
 
-        $query['user_agent'] = request()->header('user-agent');
-        $query['referer'] = request()->header('referer');
-        $query['ip_addr'] = request()->ip();
+        $req = request();
+        $query['user_agent'] = $req->header('user-agent');
+        $query['referer'] = $req->header('referer');
+        $query['ip_addr'] = $req->ip();
         // $query['ip_addr'] = '188.163.15.253';
         $query['subid'] = app()->domain();
         if ($subid1) $query['subid1'] = $subid1;
