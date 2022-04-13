@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Str;
 
 return [
 
-    'gtagId' => env('GTAG_ID', ''),
+    'gtag_id' => env('GTAG_ID', ''),
+    'escape_links' => Str::of(env('ESCAPE_LINKS', ''))->split('~\s+~'),
 
     /*
     |--------------------------------------------------------------------------

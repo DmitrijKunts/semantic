@@ -1,6 +1,6 @@
-@if (config('app.gtagId') != '')
+@if (config('app.gtag_id') != '')
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.gtagId') }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.gtag_id') }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -9,6 +9,6 @@
         }
         gtag('js', new Date());
 
-        gtag('config', '{{ config('app.gtagId') }}');
+        gtag('config', '{{ config('app.gtag_id') }}');
     </script>
 @endif
