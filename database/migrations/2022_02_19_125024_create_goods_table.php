@@ -28,10 +28,8 @@ return new class extends Migration
             $table->string('vendor')->nullable();
             $table->string('vendor_url')->nullable();
             $table->string('model')->nullable();
-            $table->string('meta_keys')->nullable();
-            $table->string('meta_desc')->nullable();
             $table->text('desc')->nullable();
-            $table->text('desc_plus')->nullable();
+            $table->text('summary')->nullable();
             $table->text('tech')->nullable();
             $table->text('equip')->nullable();
             $table->timestamps();

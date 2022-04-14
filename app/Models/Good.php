@@ -14,7 +14,7 @@ class Good extends Model
     protected $fillable = [
         'sku', 'code', 'name', 'link', 'slug', 'price', 'currency',
         'pictures', 'vendor', 'vendor_url', 'model',
-        'meta_keys', 'meta_desc', 'desc', 'desc_plus', 'tech', 'equip'
+        'desc', 'summary', 'tech', 'equip'
     ];
 
     public function cats()
@@ -64,9 +64,14 @@ class Good extends Model
 
     public function descKey($cat)
     {
+        if ($this->summary != '') {
+            $text = $this->summary;
+        } else {
+            $text = $this->desc;
+        }
         return $cat != null && $cat->keysNotUsedWords->count() > 0
-            ? Str::words($this->desc, 10, '') . ' ' . $cat->keysNotUsedWords->pop() . '...'
-            : Str::words($this->desc, 10);
+            ? Str::words($text, 30, '') . ' ' . $cat->keysNotUsedWords->pop() . '...'
+            : Str::words($text, 30);
     }
 
     public static function makeFromJson($jsonString, Cat $cat)
@@ -104,10 +109,8 @@ class Good extends Model
                     'vendor' => (string)$offer->vendor,
                     'vendor_url' => (string)($offer->vurl ?? ''),
                     'model' => (string)$offer->model,
-                    'meta_keys' => (string)($offer->meta_keys ?? ''),
-                    'meta_desc' => (string)($offer->meta_desc ?? ''),
                     'desc' => (string)$offer->description,
-                    'desc_plus' => (string)($offer->description_plus ?? ''),
+                    'summary' => (string)($offer->summary ?? ''),
                     'tech' => $tech,
                     'equip' => $equip,
                 ]);

@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
 
     @yield('canonical')
+    @yield('meta')
 
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     @include('gtag')

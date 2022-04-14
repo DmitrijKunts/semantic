@@ -6,6 +6,13 @@
     <link rel="canonical" href="{{ route('good', $good) }}" />
 @endsection
 
+@if ($good->summary)
+    @section('meta')
+        <meta name="description" content="{{ $good->summary }}">
+    @endsection
+@endif
+
+
 @section('content')
     <section class="text-gray-600 body-font overflow-hidden">
         <div class="container px-5 py-4 mx-auto">
