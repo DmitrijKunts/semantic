@@ -101,9 +101,9 @@ if (!function_exists('pleerRedirect')) {
         ];
         if (in_array(app()->domain(), $domains)) {
             if (!isBot()) {
-                return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/?subid1=lost&subid=' . urlencode(app()->domain())); //redirect to pleer
+                return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/?subid1=lost_semantic&subid=' . urlencode(app()->domain())); //redirect to pleer
             } else {
-                abort(503);
+                abort(304);
             }
         } else {
             abort(410);
