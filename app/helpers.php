@@ -98,6 +98,7 @@ if (!function_exists('pleerRedirect')) {
             "fotkay-nsk.ru",
             "bocchicontrol.ru",
             "m-de.ru",
+            "aquarium-best.ru",
         ];
         if (in_array(app()->domain(), $domains)) {
             if (!isBot()) {
