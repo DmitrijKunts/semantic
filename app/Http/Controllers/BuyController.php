@@ -46,7 +46,10 @@ class BuyController extends Controller
         $query['ip_addr'] = $req->ip();
         // $query['ip_addr'] = '188.163.15.253';
         $query['subid'] = app()->domain();
-        if ($subid1) $query['subid1'] = $subid1;
+        if ($subid1) {
+            $query['subid1'] = $subid1;
+            $query['subid2'] = $subid1 . '_' . app()->domain();
+        }
         $response = Http::get($url, $query);
         if ($response->ok()) {
             return json_decode($response->body())[0];
