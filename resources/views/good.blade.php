@@ -20,9 +20,9 @@
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 {{ Breadcrumbs::render('good', $good) }}
                 <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+                    <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ $good->name }}</h1>
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ $good->vendor }}</h2>
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ $good->model }}</h2>
-                    <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ $good->name }}</h1>
 
                     <div class="lg:hidden flex">
                         <span class="title-font font-medium text-2xl text-gray-900">
