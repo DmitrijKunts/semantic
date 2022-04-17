@@ -42,6 +42,7 @@ Artisan::command('cats:crawl', function () {
         $cc->index($cat, true);
     });
     $this->info("\nCats crawled.");
+    $this->call('stat');
 })->purpose('Cats crawl every node.');
 
 
@@ -68,3 +69,15 @@ Artisan::command('make', function () {
     $this->call('keys:snippet');
     $this->call('cats:crawl');
 })->purpose('Make all');
+
+
+Artisan::command('stat', function () {
+    $this->table(
+        ['Object', 'Value'],
+        [
+            ['Category', Cat::all()->count()],
+            ['Good', Good::all()->count()],
+            ['Total', Cat::all()->count() + Good::all()->count()],
+        ]
+    );
+})->purpose('Show statistic');
