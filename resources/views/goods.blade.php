@@ -10,6 +10,10 @@
                                 alt="{{ $good->name }}">
                         </a>
                         <div class="p-6">
+                            @if (config('app.debug'))
+                                <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                   RANK: {{ $good->pivot->rank }}</h2>
+                            @endif
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                                 {{ $good->vendor }}</h2>
                             <h1 class="title-font text-lg font-medium text-gray-900 mb-3"><a
