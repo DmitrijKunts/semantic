@@ -16,7 +16,7 @@ class BuyController extends Controller
         if (isBot()) {
             return back();
         } else {
-            return redirect(static::teleport($good->link, 'banner'));
+            return redirect(static::teleport($good->link, 'buy'));
         }
     }
 
@@ -25,7 +25,7 @@ class BuyController extends Controller
         if (isBot()) {
             return back();
         } else {
-            return redirect(static::teleport(Banner::getBannerUrl($id, request()->input('query')), 'buy'));
+            return redirect(static::teleport(Banner::getBannerUrl($id, request()->input('query')), 'banner'));
         }
     }
 
