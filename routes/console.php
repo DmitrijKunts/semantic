@@ -40,7 +40,7 @@ Artisan::command('cats:reset', function () {
 Artisan::command('cats:crawl', function () {
     Cat::query()->update(['feeded' => null]);
     $cc = new CatController;
-    $this->withProgressBar(Cat::all(), function ($cat) use ($cc) {
+    $this->withProgressBar(Cat::withCount('keys')->where('keys_count', '>', 0)->get(), function ($cat) use ($cc) {
         $cc->index($cat, true);
     });
     $this->info("\nCats crawled.");
