@@ -31,7 +31,7 @@ class Cat extends Model
     {
         $query->withCount('goods')
             ->withCount('keys')
-            ->addSelect(DB::raw('(SELECT count(*) FROM cats AS cats2 WHERE cats2.p_id=cats.id) childs_count'));
+            ->addSelect(DB::raw('(SELECT count(*) FROM cats as c WHERE c.p_id=cats.id) childs_count'));
 
         if (getBanner()) {
             $query
