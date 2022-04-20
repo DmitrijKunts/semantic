@@ -7,6 +7,7 @@
 @endsection
 
 @section('schemaorg')
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'good', $good) }}
     <script type="application/ld+json">
         {
             "@context": "https://schema.org/",
@@ -38,8 +39,7 @@
                 "@type": "AggregateRating",
                 "ratingValue": "4.4",
                 "reviewCount": "89"
-            }, --}}
-            "offers": {
+            }, --}} "offers": {
                 "@type": "Offer",
                 "url": "{{ route('good', $good) }}",
                 "priceCurrency": "{{ $good->currency }}",

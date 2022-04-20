@@ -13,6 +13,10 @@ $page = $page ? " #$page" : '';
     <link rel="canonical" href="{{ $cat->canonical() }}" />
 @endsection
 
+@section('schemaorg')
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'cat', $cat) }}
+@endsection
+
 @section('content')
     <div class="text-gray-600 body-font">
         <div class="container px-5 py-12 mx-auto">
