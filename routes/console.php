@@ -95,9 +95,10 @@ Artisan::command('stat', function () {
     $this->table(
         ['Object', 'Value'],
         [
-            ['Category', Cat::all()->count()],
-            ['Good', Good::all()->count()],
-            ['Total', Cat::all()->count() + Good::all()->count()],
+            ['Categories', Cat::all()->count()],
+            ['Keys', Key::all()->count()],
+            ['Goods', Good::all()->count()],
+            ['Total', Cat::all()->count() + Key::all()->count() + Good::all()->count()],
         ]
     );
 })->purpose('Show statistic');
