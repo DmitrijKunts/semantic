@@ -14,17 +14,21 @@ use Maatwebsite\Excel\Concerns\OnEachRow;
 class CatsImport implements WithMultipleSheets, SkipsUnknownSheets
 {
     private $output;
+    private $importKeys;
 
-    public function __construct($output)
+    public function __construct($output, $importKeys = true)
     {
         $this->output = $output;
+        $this->importKeys = $importKeys;
     }
 
     public function sheets(): array
     {
         $res = [];
-        foreach (range(1, 10000) as $k => $v) {
-            $res[$k] = new ClusterSheetImport($this->output);
+        if ($this->importKeys) {
+            foreach (range(1, 10000) as $k => $v) {
+                $res[$k] = new ClusterSheetImport($this->output);
+            }
         }
         $res[0] = new MapSheetImport($this->output);
         return $res;
@@ -82,15 +86,26 @@ class MapSheetImport implements OnEachRow
             $pId = self::$levels[$lastCol - 1];
             $_c = Cat::updateOrCreate(
                 [
-                    'p_id' => $pId,
                     'name' => $_name
                 ],
                 [
+                    'p_id' => $pId,
                     'slug' => self::genSlug($_name, $pId),
                     'sheet' => $_sheet,
                     'text' => $text,
                 ]
             );
+            // $_c = Cat::updateOrCreate(
+            //     [
+            //         'p_id' => $pId,
+            //         'name' => $_name
+            //     ],
+            //     [
+            //         'slug' => self::genSlug($_name, $pId),
+            //         'sheet' => $_sheet,
+            //         'text' => $text,
+            //     ]
+            // );
 
             self::$levels[$lastCol] = $_c->id;
         }
