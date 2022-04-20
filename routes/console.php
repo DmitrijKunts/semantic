@@ -95,7 +95,7 @@ Artisan::command('stat', function () {
     $this->table(
         ['Object', 'Value'],
         [
-            ['Categories', Cat::all()->count()],
+            ['Categories [with keys]', Cat::all()->count() . ' [' . Cat::withCount('keys')->where('keys_count', '>', 0)->count() . ']'],
             ['Keys', Key::all()->count()],
             ['Goods', Good::all()->count()],
             ['Total', Cat::all()->count() + Key::all()->count() + Good::all()->count()],
