@@ -6,6 +6,52 @@
     <link rel="canonical" href="{{ route('good', $good) }}" />
 @endsection
 
+@section('schemaorg')
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": "{{ $good->name }}",
+            "image": [
+                "{{ $good->picture() }}"
+            ],
+            "description": "{{ $good->desc }}",
+            "sku": "{{ $good->sku }}",
+            "mpn": "{{ $good->sku + 666 }}",
+            "brand": {
+                "@type": "Brand",
+                "name": "{{ $good->vendor }}"
+            },
+            {{-- "review": {
+                "@type": "Review",
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "4",
+                    "bestRating": "5"
+                },
+                "author": {
+                    "@type": "Person",
+                    "name": "Fred Benson"
+                }
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.4",
+                "reviewCount": "89"
+            }, --}}
+            "offers": {
+                "@type": "Offer",
+                "url": "{{ route('good', $good) }}",
+                "priceCurrency": "{{ $good->currency }}",
+                "price": "{{ $good->price }}",
+                "priceValidUntil": "{{ $good->updated_at->addDays(15)->format('Y-m-d') }}",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": "https://schema.org/InStock"
+            }
+        }
+    </script>
+@endsection
+
 @if ($good->summary)
     @section('meta')
         <meta name="description" content="{{ $good->summary }}">

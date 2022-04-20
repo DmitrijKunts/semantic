@@ -9,6 +9,7 @@
 
     @yield('canonical')
     @yield('meta')
+    @yield('schemaorg')
 
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     @include('gtag')
