@@ -6,13 +6,14 @@
                 <div class="p-4 md:w-1/3">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                         <a rel="nofollow" href="{{ route('good', $good) }}">
-                            <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{!! $good->thumbnail() !!}"
-                                alt="{{ $good->name }}">
+                            <img srcset="/css/loading.gif 320w" sizes="100vw"
+                                class="lozad lg:h-48 md:h-36 w-full object-cover object-center"
+                                data-srcset="{!! $good->thumbnail() !!} 320w" src="{!! $good->thumbnail() !!}" alt="{{ $good->name }}">
                         </a>
                         <div class="p-6">
                             @if (config('app.debug'))
                                 <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                   RANK: {{ $good->pivot->rank }}</h2>
+                                    RANK: {{ $good->pivot->rank }}</h2>
                             @endif
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                                 {{ $good->vendor }}</h2>

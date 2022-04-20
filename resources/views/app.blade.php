@@ -12,6 +12,7 @@
     @yield('schemaorg')
 
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <script src="{{ mix('/js/app.js') }}"></script>
     @include('gtag')
 </head>
 
