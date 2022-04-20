@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Cat extends Model
 {
@@ -17,6 +18,13 @@ class Cat extends Model
     public $timestamps = false;
 
     protected $fillable = ['id', 'p_id', 'name', 'slug', 'text', 'sheet'];
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => config('app.locale') == 'en' ? Str::title($value) : $value,
+        );
+    }
 
     public function canonical()
     {
@@ -78,7 +86,7 @@ class Cat extends Model
         $nameWords = Str::of($this->name)
             ->lower()
             ->split('~\s+~')
-            ->map(fn ($i) => trim($i))
+            ->map(fn ($i) => Str::lower(trim($i)))
             ->filter(function ($i) {
                 if ($i == '') return false;
                 if (Str::of($i)->match('~^[а-я]{1,3}$~iu') != '') return false;
@@ -91,7 +99,7 @@ class Cat extends Model
         }
         $words = Str::of($words)
             ->split('~\s+~')
-            ->map(fn ($i) => trim($i))
+            ->map(fn ($i) => Str::lower(trim($i)))
             ->filter(function ($i) {
                 if ($i == '') return false;
                 if (Str::of($i)->match('~^[а-я]{1,3}$~iu') != '') return false;
@@ -100,7 +108,6 @@ class Cat extends Model
             ->unique()
             ->reverse()
             ->diff($nameWords);
-        // ->implode(',');
         $this->keysNotUsedWords = $words;
     }
 
