@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Cat extends Model
@@ -19,35 +20,52 @@ class Cat extends Model
 
     public function canonical()
     {
-        if ($this->goods->count() || $this->childs->count()) {
+        if ($this->goods->count() || $this->childs->count() || !$this->parent) {
             return route('cat', $this);
         } else {
             return route('cat', $this->parent);
         }
     }
 
-    public function childsNotBlank()
+    public static function filter($query)
     {
+        $query->withCount('goods')
+            ->withCount('keys')
+            ->addSelect(DB::raw('(SELECT count(*) FROM cats AS cats2 WHERE cats2.p_id=cats.id) childs_count'));
+
         if (getBanner()) {
-            return $this->childs();
-        } else {
-            return Cat::withCount('goods')
-                ->where('p_id',  $this->id)
+            $query
                 ->where(function ($query) {
-                    $query->where('feeded', null)
-                        ->orWhere('goods_count', '>', 0)
+                    $query->whereRaw('(SELECT count(*) FROM cats as c WHERE c.p_id=cats.id)>0')
+                        ->orWhereRaw('(select count(*) from "keys" where "cats"."id" = "keys"."cat_id")>0');
+                });
+        } else {
+            $query
+                ->where(function ($query) {
+                    $query
+                        // ->where('childs_count', '>', 0)
+                        ->whereRaw('(SELECT count(*) FROM cats as c WHERE c.p_id=cats.id)>0')
+
                         ->orWhere(function ($query) {
-                            $query->selectRaw('count(*)')
-                                ->from('cats as c')
-                                ->whereColumn('c.p_id', 'cats.id');
-                        }, '>', 0);
+                            $query
+                                // ->where('keys_count', '>', 0)
+                                ->whereRaw('(select count(*) from "keys" where "cats"."id" = "keys"."cat_id")>0')
+                                ->where(function ($query) {
+                                    $query
+                                        // ->where('goods_count', '>', 0)
+                                        ->whereRaw('(select count(*) from "goods" inner join "cat_good" on "goods"."id" = "cat_good"."good_id" where "cats"."id" = "cat_good"."cat_id")>0')
+
+                                        ->orWhereNull('feeded');
+                                });
+                        });
                 });
         }
+        return $query;
     }
 
     public function childs()
     {
-        return $this->hasMany(Cat::class, 'p_id');
+        return self::filter($this->hasMany(Cat::class, 'p_id'));
     }
 
     public function keys()
@@ -98,26 +116,8 @@ class Cat extends Model
 
     public function brothers()
     {
-        return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->get();
-    }
-
-    public function brothersNotBlank()
-    {
-        return Cat::withCount('goods')
-            ->where('id', '<>', $this->id)
-            ->where('p_id',  $this->p_id)
-            ->where(function ($query) {
-                $query->where('feeded', null)
-                    ->orWhere('goods_count', '>', 0)
-                    ->orWhere(function ($query) {
-                        $query->selectRaw('count(*)')
-                            ->from('cats as c')
-                            ->whereColumn('c.p_id', 'cats.id');
-                    }, '>', 0);
-            })
-            ->limit(20)
-            ->get();
-        // return Cat::where('p_id', $this->p_id)->where('id', '<>', $this->id)->limit(20)->get();
+        return $this->parent->childs()
+            ->where('id', '<>', $this->id);
     }
 
     public function goods()

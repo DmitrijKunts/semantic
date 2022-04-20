@@ -92,7 +92,7 @@
     </section>
 
     @include('cats', [
-        'catChilds' => $good->cats()->first()->brothersNotBlank(),
+        'catChilds' => $good->cats()->first()->brothers()->limit(20)->get(),
         'catsAsKeys' => $good->name,
     ])
 

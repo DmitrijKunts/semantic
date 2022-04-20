@@ -9,6 +9,11 @@
                 </svg>
                 <a href="{{ route('cat', $child) }}"
                     class="title-font font-medium">{{ isset($catsAsKeys) ? $child->key($catsAsKeys) : $child->name }}</a>
+                @if (config('app.debug'))
+                    [childs: {{ $child->childs_count }}, keys: {{ $child->keys_count }},
+                    feeded: {{ $child->feeded }},goods: {{ $child->goods_count }}]
+                @endif
+
             </div>
         </div>
     @endforeach
