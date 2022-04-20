@@ -3,9 +3,11 @@
 use App\Http\Controllers\CatController;
 use App\Models\Cat;
 use App\Models\Good;
+use App\Models\Key;
 use App\Models\Snippet;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 
 Artisan::command('domains:down', function () {
     $this->call('down', [], $this->output);
@@ -47,6 +49,23 @@ Artisan::command('cats:crawl', function () {
 
 
 
+Artisan::command('keys:clear', function () {
+    Key::truncate();
+    $this->output->success('Key truncated!');
+})->purpose('Truncate keys');
+
+Artisan::command('keys:import', function () {
+    $this->output->title('Starting import keys');
+    if (!File::exists(storage_path('keys.xlsx'))) {
+        $this->output->title(storage_path('keys.xlsx') . ' - file not found, exit');
+        return;
+    }
+    Snippet::query()->truncate();
+    Excel::import(new \App\Imports\KeysImport, storage_path('keys.xlsx'));
+    Cache::flush();
+    $this->output->success('Import successful');
+})->purpose('Import keys');
+
 Artisan::command('keys:snippet', function () {
     $this->output->title('Starting import snippets to keys');
     Snippet::query()->truncate();
@@ -66,6 +85,7 @@ Artisan::command('goods:clear', function () {
 Artisan::command('make', function () {
     $this->call('migrate:fresh', ['--force' => 1]);
     $this->call('cats:import');
+    $this->call('keys:import');
     $this->call('keys:snippet');
     $this->call('cats:crawl');
 })->purpose('Make all');
