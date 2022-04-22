@@ -1,6 +1,8 @@
 <?php
 
 use App\Banner;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 if (!function_exists('constGen')) {
     function genConst($val, $noise = '')
@@ -87,11 +89,60 @@ if (!function_exists('getBanner')) {
 }
 
 if (!function_exists('pleerRedirect')) {
+    function pleerCheckUri($domain)
+    {
+        switch ($domain) {
+            case 'dr-kadir.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~html\.php\?(.+?)(:?$|&)~isu')
+                    ->replace('_', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+            case 'xn----8sbvgdgjm0bcl7gh.xn--p1ai':
+                return "ulp=https%3A%2F%2Fwww.pleer.ru";
+                break;
+            case 'temako-suchi.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~/(.+?)\.shtm~isu')
+                    ->replace('-', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+            case 'atletikclub.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~\?index_id=(.+?)(:?$|&)~isu')
+                    ->replace('-', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+            case 'fotkay-nsk.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~container\.asp\?(.+?)(:?$|&)~isu')
+                    ->replace('_', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+            case 'bocchicontrol.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~revision\.asp\?(.+?)(:?$|&)~isu')
+                    ->replace('-', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+            case 'aquarium-best.ru':
+                $q = (string)Str::of(request()->getRequestUri())
+                    ->match('~container\.php\?(.+?)(:?$|&)~isu')
+                    ->replace('-', '%20');
+                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
     function pleerRedirect()
     {
         $domains = [
+            "semantic1.local",
             "dr-kadir.ru",
-            "uralneftestroi.ru",
             "xn----8sbvgdgjm0bcl7gh.xn--p1ai",
             "temako-suchi.ru",
             "atletikclub.ru",
@@ -101,8 +152,12 @@ if (!function_exists('pleerRedirect')) {
             "aquarium-best.ru",
         ];
         if (in_array(app()->domain(), $domains)) {
-            if (!isBot()) {
-                return redirect('https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/?subid1=lost_semantic&subid=' . urlencode(app()->domain())); //redirect to pleer
+            if (!isBot() && Str::of(request()->getRequestUri())->match('~\.jpg|\.gif|\.css|\.js~') == '') {
+                $ulp = pleerCheckUri(app()->domain());
+                // dd($ulp);
+                if (!$ulp) abort(304);
+                Log::channel('pleer')->info(request()->getRequestUri());
+                return redirect("https://ad.admitad.com/g/9c4ca2202b15d564433592c5d6d73b/?{$ulp}subid1=lost_semantic&subid=" . urlencode(app()->domain())); //redirect to pleer
             } else {
                 abort(304);
             }
