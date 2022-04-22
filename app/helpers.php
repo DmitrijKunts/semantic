@@ -96,7 +96,6 @@ if (!function_exists('pleerRedirect')) {
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~html\.php\?(.+?)(:?$|&)~isu')
                     ->replace('_', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
             case 'xn----8sbvgdgjm0bcl7gh.xn--p1ai':
                 return "ulp=https%3A%2F%2Fwww.pleer.ru";
@@ -105,43 +104,39 @@ if (!function_exists('pleerRedirect')) {
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~/(.+?)\.shtm~isu')
                     ->replace('-', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
             case 'atletikclub.ru':
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~\?index_id=(.+?)(:?$|&)~isu')
                     ->replace('-', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
             case 'fotkay-nsk.ru':
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~container\.asp\?(.+?)(:?$|&)~isu')
                     ->replace('_', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
             case 'bocchicontrol.ru':
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~revision\.asp\?(.+?)(:?$|&)~isu')
                     ->replace('-', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
             case 'aquarium-best.ru':
                 $q = (string)Str::of(request()->getRequestUri())
                     ->match('~container\.php\?(.+?)(:?$|&)~isu')
                     ->replace('-', '%20');
-                return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
                 break;
 
             default:
                 return null;
                 break;
         }
+        return $q ? "ulp=https%3A%2F%2Fwww.pleer.ru%2Fsearch_$q.html&" : null;
     }
 
     function pleerRedirect()
     {
         $domains = [
-            "semantic1.local",
+            // "semantic1.local",
             "dr-kadir.ru",
             "xn----8sbvgdgjm0bcl7gh.xn--p1ai",
             "temako-suchi.ru",
