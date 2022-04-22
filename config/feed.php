@@ -8,4 +8,5 @@ return [
     'goods_count' => env('FEED_GOODS_COUNT', 100),
     'goods_order' => env('FEED_GOODS_ORDER', 'cat_good.rank'),
     'img_cache' => env('FEED_IMG_CACHE', '/var/www/image_cache'),
+    'update_every_days' => 10,//обновление товаров в днях
 ];

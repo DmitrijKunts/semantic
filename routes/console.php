@@ -47,6 +47,31 @@ Artisan::command('cats:crawl', function () {
     $this->call('stat');
 })->purpose('Cats crawl every node.');
 
+Artisan::command('cats:refeed', function () {
+    if (app()->domain() == '') {
+        $appPath = base_path();
+        foreach (config('domain.domains') as $d) {
+            $this->info($d);
+            print shell_exec(sprintf('cd %s && php artisan cats:refeed --domain=%s', $appPath, $d));
+        }
+    } else {
+        $cats = Cat::withCount('keys')
+            ->where('keys_count', '>', 0)
+            ->where(function ($query) {
+                // $query->where('feeded', '<', now()->addMinutes(-2))
+                $query->where('feeded', '<', now()->addDays(-config('feed.update_every_days', 10)))
+                    ->orWhereNull('feeded');
+            })
+            ->get();
+        if ($cats->count()) {
+            $cc = new CatController;
+            $this->withProgressBar($cats, function ($cat) use ($cc) {
+                $cc->index($cat, true);
+            });
+            $this->info("\nCats crawled.");
+        }
+    }
+})->purpose('Update goods from feed server for every category.');
 
 
 Artisan::command('keys:clear', function () {
@@ -80,6 +105,7 @@ Artisan::command('goods:clear', function () {
     Cat::query()->update(['feeded' => null]);
     $this->info('Goods cleared.');
 })->purpose('Goods clear');
+
 
 
 Artisan::command('make', function () {
