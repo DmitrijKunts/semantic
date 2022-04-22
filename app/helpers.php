@@ -98,7 +98,7 @@ if (!function_exists('pleerRedirect')) {
                     ->replace('_', '%20');
                 break;
             case 'xn----8sbvgdgjm0bcl7gh.xn--p1ai':
-                return "ulp=https%3A%2F%2Fwww.pleer.ru";
+                return "ulp=https%3A%2F%2Fwww.pleer.ru&";
                 break;
             case 'temako-suchi.ru':
                 $q = (string)Str::of(request()->getRequestUri())
