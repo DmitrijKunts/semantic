@@ -149,4 +149,14 @@ class Cat extends Model
             return $res->unique();
         });
     }
+
+    public function youtubes()
+    {
+        return $this->hasManyThrough(Youtube::class, Key::class);
+    }
+
+    public function youtubesUniq()
+    {
+        return collect(constSort($this->youtubes, 'youtubesUniq' . request()->getRequestUri()))->slice(0, 5);
+    }
 }

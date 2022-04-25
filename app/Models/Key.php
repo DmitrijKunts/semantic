@@ -24,6 +24,11 @@ class Key extends Model
         return $this->hasMany(Snippet::class);
     }
 
+    public function youtubes()
+    {
+        return $this->hasMany(Youtube::class);
+    }
+
     protected function name(): Attribute
     {
         return Attribute::make(

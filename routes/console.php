@@ -93,7 +93,6 @@ Artisan::command('keys:import', function () {
 
 Artisan::command('keys:snippet', function () {
     $this->output->title('Starting import snippets to keys');
-    Snippet::query()->truncate();
     Excel::import(new \App\Imports\SnippetImport, storage_path('serp.xlsx'));
     Cache::flush();
     $this->output->success('Import successful');

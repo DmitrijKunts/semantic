@@ -4,10 +4,10 @@ use App\Banner;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-if (!function_exists('constGen')) {
+if (!function_exists('genConst')) {
     function genConst($val, $noise = '')
     {
-        return $val == 0 ? 0 : hexdec(substr(sha1($noise), 0, 15)) % $val;
+        return $val == 0 ? 0 : hexdec(substr(sha1(app()->domain() . $noise), 0, 15)) % $val;
     }
 }
 
@@ -159,5 +159,49 @@ if (!function_exists('pleerRedirect')) {
         } else {
             abort(410);
         }
+    }
+}
+
+
+if (!function_exists('snippetClear')) {
+    function snippetClear($str): string
+    {
+        $filters = [
+            'HOTLINE' => '',
+            'R0ZЕТKА_OLD' => '',
+            'ROZETKA' => '',
+            'CACTUS' => '',
+            'ELDORADO' => '',
+            'Эпицентр' => '',
+            'Фокстрот' => '',
+            '[a-z0-9]+\.[a-z]+\.[a-z]+' => '',
+            '[a-z0-9]+\.[a-z]+' => '',
+            'Magazilla' => '',
+            'Touch' => '',
+            'e-Katalog' => '',
+            '\.\.\.' => '',
+            '\(\d{3}\) \d \d{3} \d{3}' => '',
+            '\(\d{3}\) \d{3}-\d{2}-\d{2}' => '',
+            '\(\d{3}\)\d{3}-\d{2}-\d{2}' => '',
+            '\+\d{3}\s+?\(\d{2}\)\s+?\d{3}-\d{2}-\d{2}' => '',
+            '\d{3}\s+?\(\d{2}\)\s+?\d{3}-\d{2}-\d{2}' => '',
+            '\d-\d{3}-\d{3}-\d{3}' => '',
+            '\d{3}-\d{2}-\d{2}' => '',
+            '\d \d{3} \d{3}' => '',
+        ];
+        if (config('app.locale') == 'en') {
+            $filters['[а-я]'] = '';
+        }
+        if (config('feed.geo') == 'ru') {
+            $filters['Украине'] = '';
+            $filters['грн\.'] = '';
+            $filters['₴'] = '';
+        }
+
+        $str = Str::of($str);
+        foreach ($filters as $p => $r) {
+            $str = $str->replaceMatches(Str::of($p)->start('~')->finish('~ui'), $r);
+        }
+        return  $str->squish();
     }
 }

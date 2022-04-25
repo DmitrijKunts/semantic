@@ -137,10 +137,12 @@
         </div>
     </section>
 
+    @include('goods', ['goods' => $good->brothers()])
+
     @include('cats', [
         'catChilds' => $good->cats()->first()->brothers()->limit(20)->get(),
         'catsAsKeys' => $good->name,
     ])
 
-    @include('goods', ['goods' => $good->brothers()])
+
 @endsection

@@ -30,9 +30,18 @@ class SerpSheetImport implements OnEachRow
     {
         if (($sheet = $row->getDelegate()->getWorksheet()->getTitle()) == 'Карта') return;
         if ($row->getIndex() < 3) return;
-        if ($row[0] == '' || $row[5] == '') return;
+        $row = $row->toArray();
+        if ($row[0] == '') return;
         $key = Key::firstWhere('name', $row[0]);
         if (!$key) return;
-        $key->snippets()->create(['snippet'=>$row[5]]);
+        if ($row[5] != '') {
+            $key->snippets()->updateOrCreate(['snippet' => $row[5]]);
+        }
+        if ($row[7] != '' && $row[8] != '' && $row[9] != '') {
+            $key->youtubes()->updateOrCreate(
+                ['url' => $row[7]],
+                ['title' => $row[8], 'snippet' => $row[9],]
+            );
+        }
     }
 }

@@ -49,8 +49,8 @@ class Good extends Model
 
     public function brothers()
     {
-        $first = $this->cats()->first()->goods()->reorder()->orderBy('id', 'desc')->where('goods.id', '<', $this->id)->limit(2)->get();
-        $second = $this->cats()->first()->goods()->reorder()->orderBy('id', 'asc')->where('goods.id', '>', $this->id)->limit(2)->get();
+        $first = $this->cats()->first()->goods()->reorder()->orderBy('id', 'desc')->where('goods.id', '<', $this->id)->limit(3)->get();
+        $second = $this->cats()->first()->goods()->reorder()->orderBy('id', 'asc')->where('goods.id', '>', $this->id)->limit(3)->get();
         return collect($first)->merge($second);
         // return $this->cats()->first()->goods()->where('goods.id', '<>', $this->id)->limit(3)->get();
     }
@@ -95,7 +95,7 @@ class Good extends Model
                 }
                 $equip = implode(PHP_EOL, $equip);
 
-                $sku = genConst(9999999, app()->domain() . $offer->code);
+                $sku = genConst(9999999, $offer->code);
 
                 $good =  Good::Create([
                     'sku' => $sku,
