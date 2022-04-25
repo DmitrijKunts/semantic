@@ -100,6 +100,7 @@ Artisan::command('keys:snippet', function () {
 
 Artisan::command('snippets:clear', function () {
     Snippet::query()->truncate();
+    Cache::flush();
     $this->output->success('Snippets cleared.');
 })->purpose('Clear snippets.');
 
