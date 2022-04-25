@@ -98,7 +98,7 @@ Artisan::command('keys:snippet', function () {
     $this->output->success('Import successful');
 })->purpose('Import snippets to keys');
 
-Artisan::command('snippet:clear', function () {
+Artisan::command('snippets:clear', function () {
     Snippet::query()->truncate();
     $this->output->success('Snippets cleared.');
 })->purpose('Clear snippets.');
