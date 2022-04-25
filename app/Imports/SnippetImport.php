@@ -37,7 +37,7 @@ class SerpSheetImport implements OnEachRow
         if ($row[5] != '') {
             $key->snippets()->updateOrCreate(['snippet' => $row[5]]);
         }
-        if ($row[7] != '' && $row[8] != '' && $row[9] != '') {
+        if ($row[7] ?? '' != '' && $row[8] ?? '' != '' && $row[9] ?? '' != '') {
             $key->youtubes()->updateOrCreate(
                 ['url' => $row[7]],
                 ['title' => $row[8], 'snippet' => $row[9],]
