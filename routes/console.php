@@ -5,6 +5,7 @@ use App\Models\Cat;
 use App\Models\Good;
 use App\Models\Key;
 use App\Models\Snippet;
+use App\Models\Youtube;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -103,6 +104,12 @@ Artisan::command('snippets:clear', function () {
     Cache::flush();
     $this->output->success('Snippets cleared.');
 })->purpose('Clear snippets.');
+
+Artisan::command('youtubes:clear', function () {
+    Youtube::query()->truncate();
+    Cache::flush();
+    $this->output->success('Youtubes cleared.');
+})->purpose('Clear youtubes.');
 
 
 Artisan::command('goods:clear', function () {
