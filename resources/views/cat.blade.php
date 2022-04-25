@@ -36,12 +36,12 @@ $page = $page ? " #$page" : '';
                 @include('cats', ['catChilds' => $catChilds])
             @endisset
 
-            @if (count($cat->goods) > 0)
+            {{-- @if (count($cat->goods) > 0) --}}
                 @include('goods', [
                     'goods' => $cat->goods()->paginate(),
                     'loadKeys' => $cat->calcKeysNotUsedWords(),
                 ])
-            @endif
+            {{-- @endif --}}
 
             {{-- {{ $cat->keysNotUsedWords }} --}}
 
