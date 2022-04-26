@@ -36,14 +36,10 @@ $page = $page ? " #$page" : '';
                 @include('cats', ['catChilds' => $catChilds])
             @endisset
 
-            {{-- @if (count($cat->goods) > 0) --}}
-                @include('goods', [
-                    'goods' => $cat->goods()->paginate(),
-                    'loadKeys' => $cat->calcKeysNotUsedWords(),
-                ])
-            {{-- @endif --}}
-
-            {{-- {{ $cat->keysNotUsedWords }} --}}
+            @include('goods', [
+                'goods' => $cat->goods()->paginate(),
+                'loadKeys' => $cat->calcKeysNotUsedWords(),
+            ])
 
             <div class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
                 {!! Illuminate\Support\Str::of($cat->text)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
