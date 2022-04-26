@@ -25,6 +25,9 @@ $page = $page ? " #$page" : '';
             <div class="text-center mb-10">
                 <h1 class="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
                     {{ $cat->name }}
+                    @if (config('app.debug'))
+                        [keys: {{ $cat->keys->count() }}]
+                    @endif
                 </h1>
             </div>
 
