@@ -17,7 +17,7 @@ class CatController extends Controller
 
     public function index(Cat $cat, $crawl = false)
     {
-        if (blank($cat->keys)) abort(404);
+        if (blank(Cat::filter($cat->where('id',$cat->id)))) abort(404);
         $catChilds = null;
         if ($cat->childs->count() == 0 && ($cat->feeded == null || $crawl)) {
             Good::makeFromJson(Feed::getFeed($cat->name), $cat);
