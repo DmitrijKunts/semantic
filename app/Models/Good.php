@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -30,6 +31,11 @@ class Good extends Model
     public function thumbnail($index = 0)
     {
         return route('img.small', [$this->sku, $index]);
+    }
+
+    public function pictures()
+    {
+        return Str::of($this->pictures)->explode(',');
     }
 
     public function equips()
@@ -80,32 +86,33 @@ class Good extends Model
         if (!$json->success) {
             abort(500, $json->message);
         }
+
         foreach ($json->offers as $offer) {
-            $good = Good::where('code', (string)$offer->code)->first();
-            if (!$good) {
-                $tech = [];
-                foreach ($offer->tech_desc ?? [] as $i) {
-                    $tech[] = (string)$i;
-                }
-                $tech = implode(PHP_EOL, $tech);
+            $tech = [];
+            foreach ($offer->tech_desc ?? [] as $i) {
+                $tech[] = (string)$i;
+            }
+            $tech = implode(PHP_EOL, $tech);
 
-                $equip = [];
-                foreach ($offer->equip ?? [] as $i) {
-                    $equip[] = (string)$i;
-                }
-                $equip = implode(PHP_EOL, $equip);
+            $equip = [];
+            foreach ($offer->equip ?? [] as $i) {
+                $equip[] = (string)$i;
+            }
+            $equip = implode(PHP_EOL, $equip);
 
-                $sku = genConst(9999999, $offer->code);
+            $sku = genConst(9999999, $offer->code);
 
-                $good =  Good::Create([
+
+            $good =  Good::updateOrCreate(
+                ['code' => (string)$offer->code],
+                [
                     'sku' => $sku,
-                    'code' => (string)$offer->code,
                     'name' => (string)$offer->name,
                     'link' => (string)$offer->url,
                     'slug' => Str::of($sku . ' ' . $offer->name)->slug('-'),
                     'price' => (float)$offer->price,
                     'currency' => (string)$offer->currencyId,
-                    'pictures' => (string)$offer->pictures,
+                    'pictures' => implode(',', Arr::wrap($offer->pictures)),
                     'vendor' => (string)$offer->vendor,
                     'vendor_url' => (string)($offer->vurl ?? ''),
                     'model' => (string)$offer->model,
@@ -113,8 +120,8 @@ class Good extends Model
                     'summary' => (string)($offer->summary ?? ''),
                     'tech' => $tech,
                     'equip' => $equip,
-                ]);
-            }
+                ]
+            );
             $good->cats()->syncWithoutDetaching($cat);
             DB::table('cat_good')
                 ->where('cat_id', $cat->id)

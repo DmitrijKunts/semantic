@@ -14,7 +14,7 @@
             "@type": "Product",
             "name": "{{ $good->name }}",
             "image": [
-                "{{ $good->picture() }}"
+                {!! $good->pictures()->map(fn($i, $k) => '"' . $good->picture($k) . '"')->join(',') !!}
             ],
             "description": "{{ $good->desc }}",
             "sku": "{{ $good->sku }}",
@@ -131,8 +131,28 @@
                         </button>
                     </div>
                 </div>
-                <img alt="{{ $good->name }}" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                    src="{{ $good->picture() }}">
+                <img alt="{{ $good->name }}"
+                    class="lozad lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                    srcset="/css/loading.gif 320w" sizes="100vw" src="{{ $good->picture() }}"
+                    data-srcset="{!! $good->picture() !!} 320w">
+
+                <section class="text-gray-600 body-font">
+                    <div class="container px-5 mx-auto flex flex-wrap">
+                        <div class="flex flex-wrap md:-m-2 -m-1">
+                            @foreach ($good->pictures() as $p)
+                                @if (!$loop->first)
+                                    <div class="md:p-2 p-1 lg:w-1/2">
+                                        <img alt="{{ $good->name . ' #' . $loop->index }}" srcset="/css/loading.gif 320w"
+                                            sizes="100vw" class="lozad w-full object-cover h-full object-center block"
+                                            data-srcset="{!! $good->picture($loop->index) !!} 320w"
+                                            src="{{ $good->picture($loop->index) }}">
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </section>

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->decimal('price', $precision = 8, $scale = 2);
             $table->string('currency');
-            $table->string('pictures')->nullable();
+            $table->text('pictures')->nullable();
             $table->string('vendor')->nullable();
             $table->string('vendor_url')->nullable();
             $table->string('model')->nullable();

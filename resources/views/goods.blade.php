@@ -27,7 +27,8 @@
                         <div class="p-6">
                             @if (config('app.debug'))
                                 <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                    RANK: {{ $good->pivot->rank }}</h2>
+                                    [RANK: {{ $good->pivot->rank }}, PicCount: {{ $good->pictures()->count() }}]
+                                </h2>
                             @endif
                             <h3 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                                 {{ $good->vendor }}</h3>
