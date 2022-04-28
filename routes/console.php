@@ -94,8 +94,10 @@ Artisan::command('keys:import', function () {
 
 Artisan::command('keys:snippet', function () {
     $this->output->title('Starting import snippets to keys');
+    if (app()->isDownForMaintenance()) DB::beginTransaction();
     Excel::import(new \App\Imports\SnippetImport, storage_path('serp.xlsx'));
     Cache::flush();
+    if (app()->isDownForMaintenance()) DB::commit();
     $this->output->success('Import successful');
 })->purpose('Import snippets to keys');
 

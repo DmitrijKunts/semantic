@@ -105,7 +105,6 @@ class Good extends Model
 
             $sku = genConst(9999999, $offer->code);
 
-
             $good =  Good::updateOrCreate(
                 ['code' => (string)$offer->code],
                 [
@@ -125,6 +124,7 @@ class Good extends Model
                     'equip' => $equip,
                 ]
             );
+
             $good->cats()->syncWithoutDetaching($cat);
             DB::table('cat_good')
                 ->where('cat_id', $cat->id)
