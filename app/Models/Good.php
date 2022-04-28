@@ -89,6 +89,7 @@ class Good extends Model
             return false;
         }
 
+        DB::beginTransaction();
         foreach ($json->offers as $offer) {
             $tech = [];
             foreach ($offer->tech_desc ?? [] as $i) {
@@ -130,6 +131,7 @@ class Good extends Model
                 ->where('good_id', $good->id)
                 ->update(['rank' => (string)$offer->rank]);
         }
+        DB::commit();
         return true;
     }
 }
