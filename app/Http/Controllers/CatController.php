@@ -20,9 +20,10 @@ class CatController extends Controller
         if (Cat::filter($cat->where('id', $cat->id))->count() == 0) abort(404);
         $catChilds = null;
         if ($cat->childs->count() == 0 && ($cat->feeded == null || $crawl)) {
-            Good::makeFromJson(Feed::getFeed($cat->name), $cat);
-            $cat->feeded = now();
-            $cat->save();
+            if (Good::makeFromJson(Feed::getFeed($cat->name), $cat)) {
+                $cat->feeded = now();
+                $cat->save();
+            }
         } else {
             $catChilds = $cat->childs()->paginate(30, pageName: 'cat_page');
         }

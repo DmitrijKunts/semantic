@@ -82,9 +82,11 @@ class Good extends Model
 
     public static function makeFromJson($jsonString, Cat $cat)
     {
+        if ($jsonString == null) return false;
         $json = json_decode($jsonString);
         if (!$json->success) {
             abort(500, $json->message);
+            return false;
         }
 
         foreach ($json->offers as $offer) {
@@ -128,5 +130,6 @@ class Good extends Model
                 ->where('good_id', $good->id)
                 ->update(['rank' => (string)$offer->rank]);
         }
+        return true;
     }
 }

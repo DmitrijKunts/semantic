@@ -32,8 +32,12 @@ class Feed
         //         'debug' => true,
         //     ])->get('/', $params));
         // }
-        $response = Http::feed()->get('/', $params);
-        if (!$response->successful()) abort(500);
+        try {
+            $response = Http::feed()->get('/', $params);
+        } catch (\Exception $e) {
+            return null;
+        }
+        if (!$response->successful()) return null;
         return $response->body();
     }
 
