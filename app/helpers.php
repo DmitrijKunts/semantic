@@ -167,7 +167,7 @@ if (!function_exists('snippetClear')) {
     function snippetClear($str): string
     {
         $filters = [
-            '\d{2} [а-я]+?\. \d{4} г\. —' => '',
+            '\d{1,2} [а-я]+?\. \d{4} г\. —' => '',
             'HOTLINE' => '',
             'R0ZЕТKА_OLD' => '',
             'ROZETKA' => '',
