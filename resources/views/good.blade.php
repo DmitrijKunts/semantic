@@ -72,7 +72,12 @@
 
                     <div class="lg:hidden flex">
                         <span class="title-font font-medium text-2xl text-gray-900">
-                            @include('price')
+                            @include('price', ['val' => $good->price])
+                            @if ($good->oldprice > 0)
+                                <span class="ml-1 line-through text-lg text-gray-400">
+                                    @include('price', ['val' => $good->oldprice])
+                                </span>
+                            @endif
                         </span>
                         @include('buy')
                     </div>
@@ -83,7 +88,7 @@
                         </div>
                     </div>
                     <div class="leading-relaxed mb-4">
-                        {!! Illuminate\Support\Str::of($good->desc)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
+                        {!! Illuminate\Support\Str::of($good->summary)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
                     </div>
 
                     @if ($good->tech != '')
@@ -117,8 +122,16 @@
 
                     <div class="flex">
                         <span class="title-font font-medium text-2xl text-gray-900">
-                            @include('price')
+                            @include('price', ['val' => $good->price])
+                            @if ($good->oldprice > 0)
+                                <span class="ml-2 line-through text-lg text-gray-400">
+                                    @include('price', ['val' => $good->oldprice])
+                                </span>
+                            @endif
                         </span>
+
+
+
                         @include('buy')
                         <button
                             class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -131,18 +144,39 @@
                         </button>
                     </div>
                 </div>
-                <img alt="{{ $good->name }}"
+                <img alt="{{ $good->alt() }}"
                     class="lozad lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
                     srcset="/css/loading.gif 320w" sizes="100vw" src="{{ $good->picture() }}"
                     data-srcset="{!! $good->picture() !!} 320w">
 
                 <section class="text-gray-600 body-font">
                     <div class="container px-5 mx-auto flex flex-wrap">
+                        <div class="flex flex-wrap md:-m-2 -m-1 ">
+                            @foreach ($good->pictures() as $p)
+                                @if (!$loop->first)
+                                    <div class="md:p-2 p-1 w-1/2 lg:w-1/5">
+                                        <img alt="{{ $good->alt($loop->index) }} - thumbnail" srcset="/css/loading.gif 320w"
+                                            sizes="100vw" class="lozad w-full object-cover h-full object-center block"
+                                            data-srcset="{!! $good->thumbnail($loop->index) !!} 320w"
+                                            src="{{ $good->thumbnail($loop->index) }}">
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </section>
+
+                <article>
+                    {!! Illuminate\Support\Str::of($good->desc)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
+                </article>
+
+                <section class="text-gray-600 body-font">
+                    <div class="container px-5 mx-auto flex flex-wrap">
                         <div class="flex flex-wrap md:-m-2 -m-1">
                             @foreach ($good->pictures() as $p)
                                 @if (!$loop->first)
-                                    <div class="md:p-2 p-1 lg:w-1/2">
-                                        <img alt="{{ $good->name . ' #' . $loop->index }}" srcset="/css/loading.gif 320w"
+                                    <div class="md:p-2 p-1">
+                                        <img alt="{{ $good->alt($loop->index) }}" srcset="/css/loading.gif 320w"
                                             sizes="100vw" class="lozad w-full object-cover h-full object-center block"
                                             data-srcset="{!! $good->picture($loop->index) !!} 320w"
                                             src="{{ $good->picture($loop->index) }}">

@@ -42,7 +42,10 @@ Artisan::command('cats:crawl', function () {
     Cat::query()->update(['feeded' => null]);
     $cc = new CatController;
     $this->withProgressBar(Cat::withCount('keys')->where('keys_count', '>', 0)->get(), function ($cat) use ($cc) {
-        $cc->index($cat, true);
+        try {
+            $cc->index($cat, true);
+        } catch (\Exception $e) {
+        }
     });
     $this->info("\nCats crawled.");
     $this->call('stat');

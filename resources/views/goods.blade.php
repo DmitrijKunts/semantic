@@ -50,8 +50,14 @@
                                 </a>
                                 <span
                                     class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
-                                    @include('price')
+                                    @include('price', ['val' => $good->price])
+                                    @if ($good->oldprice > 0)
+                                        <span class="ml-1 line-through text-gray-300 text-xs">
+                                            @include('price', ['val' => $good->oldprice])
+                                        </span>
+                                    @endif
                                 </span>
+
 
                             </div>
                         </div>

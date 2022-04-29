@@ -1,12 +1,12 @@
 @switch($good->currency)
     @case('USD')
-        ${!! $good->price !!}
+        ${!! $val !!}
     @break
 
     @case('UAH')
-        {!! $good->price !!} ₴
+        {!! $val !!} ₴
     @break
 
     @default
-        {!! $good->price . ' ' . $good->currency !!}
+        {!! $val . ' ' . $good->currency !!}
 @endswitch

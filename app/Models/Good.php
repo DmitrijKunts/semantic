@@ -13,8 +13,8 @@ class Good extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sku', 'code', 'name', 'link', 'slug', 'price', 'currency',
-        'pictures', 'vendor', 'vendor_url', 'model',
+        'sku', 'code', 'name', 'link', 'slug', 'price', 'oldprice', 'currency',
+        'pictures', 'alts', 'vendor', 'model',
         'desc', 'summary', 'tech', 'equip'
     ];
 
@@ -36,6 +36,16 @@ class Good extends Model
     public function pictures()
     {
         return Str::of($this->pictures)->explode(',');
+    }
+
+    public function alts()
+    {
+        return Str::of($this->alts)->explode(',');
+    }
+
+    public function alt($index = 0)
+    {
+        return $this->alts()[$index];
     }
 
     public function equips()
@@ -113,10 +123,11 @@ class Good extends Model
                     'link' => (string)$offer->url,
                     'slug' => Str::of($sku . ' ' . $offer->name)->slug('-'),
                     'price' => (float)$offer->price,
+                    'oldprice' => (float)$offer->oldprice,
                     'currency' => (string)$offer->currencyId,
                     'pictures' => implode(',', Arr::wrap($offer->pictures)),
+                    'alts' => implode(',', Arr::wrap($offer->alts)),
                     'vendor' => (string)$offer->vendor,
-                    'vendor_url' => (string)($offer->vurl ?? ''),
                     'model' => (string)$offer->model,
                     'desc' => (string)$offer->description,
                     'summary' => (string)($offer->summary ?? ''),

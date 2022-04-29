@@ -23,10 +23,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->decimal('price', $precision = 8, $scale = 2);
+            $table->decimal('oldprice', $precision = 8, $scale = 2);
             $table->string('currency');
             $table->text('pictures')->nullable();
+            $table->text('alts')->nullable();
             $table->string('vendor')->nullable();
-            $table->string('vendor_url')->nullable();
             $table->string('model')->nullable();
             $table->text('desc')->nullable();
             $table->text('summary')->nullable();
