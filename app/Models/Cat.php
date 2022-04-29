@@ -157,6 +157,6 @@ class Cat extends Model
 
     public function youtubesUniq()
     {
-        return collect(constSort($this->youtubes, 'youtubesUniq' . request()->getRequestUri()))->slice(0, 5);
+        return collect(constSort($this->youtubes->unique('url'), 'youtubesUniq' . request()->getRequestUri()))->slice(0, 5);
     }
 }
