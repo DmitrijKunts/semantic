@@ -175,7 +175,7 @@ if (!function_exists('snippetClear')) {
             'ELDORADO' => '',
             'Эпицентр' => '',
             'Фокстрот' => '',
-            '(:?https?://)?[a-z0-9]+?\.[a-z]+(:?\.[a-z]+)?(:?/\S+?\b)?' => '',
+            '(:?https?://|@)?[a-z0-9]+?\.[a-z]+(:?\.[a-z]+)?(:?/[\S+?\.]\b)?' => '',
             'Magazilla' => '',
             'Touch' => '',
             'e-Katalog' => '',
