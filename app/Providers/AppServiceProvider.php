@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Cat;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
@@ -27,6 +28,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        DB::statement(
+            'PRAGMA journal_mode=WAL;'
+        );
+        // try {
+        //     DB::statement(
+        //         'PRAGMA33 journal_mode=WAL;'
+        //     );
+        // } catch (\Throwable $throwable) {
+        //     // return;
+        // }
+
         if (scheme() == 'https') {
             URL::forceScheme('https');
         }
