@@ -29,7 +29,7 @@ class BuyController extends Controller
         }
     }
 
-    private static function teleport($link, $subid1 = '')
+    public static function teleport($link, $subid1 = '')
     {
         if (!Str::contains($link, 'admitad')) return $link;
 

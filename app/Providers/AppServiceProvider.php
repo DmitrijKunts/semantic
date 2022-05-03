@@ -31,13 +31,6 @@ class AppServiceProvider extends ServiceProvider
         DB::statement(
             'PRAGMA journal_mode=WAL;'
         );
-        // try {
-        //     DB::statement(
-        //         'PRAGMA33 journal_mode=WAL;'
-        //     );
-        // } catch (\Throwable $throwable) {
-        //     // return;
-        // }
 
         if (scheme() == 'https') {
             URL::forceScheme('https');

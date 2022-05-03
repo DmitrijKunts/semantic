@@ -51,18 +51,25 @@ if (!function_exists('scheme')) {
     }
 }
 
-if (!function_exists('isBot')) {
-    function isBot()
+if (!function_exists('getClientHost')) {
+    function getClientHost()
     {
-        $check_bot_is_bot = true;
-
-        $check_bot_host = Cache::store('fileshared')->remember(
+        return Cache::store('fileshared')->remember(
             'gethostbyaddr-' . request()->ip(),
             60 * 60 * 24,
             function () {
                 return gethostbyaddr(request()->ip());
             }
         );
+    }
+}
+
+if (!function_exists('isBot')) {
+    function isBot()
+    {
+        $check_bot_is_bot = true;
+
+        $check_bot_host = getClientHost();
         // $check_bot_host = 'google.com';
         // $check_bot_host = 'google-proxy-74-125-208-83.google.com ';
 
