@@ -31,6 +31,8 @@ class BuyController extends Controller
 
     private static function teleport($link, $subid1 = '')
     {
+        if (!Str::contains($link, 'admitad')) return $link;
+
         $parts = parse_url($link);
         parse_str($parts['query'], $query);
 
