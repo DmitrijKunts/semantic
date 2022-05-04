@@ -22,6 +22,7 @@ class BlockNoise
             '_token' => 1,
             '_method' => 1,
             'query' => 1,
+            'full' => 1,
         ]);
         if ($inputs->count()) {
             return pleerRedirect();

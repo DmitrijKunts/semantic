@@ -149,43 +149,47 @@
                     srcset="/css/loading.gif 320w" sizes="100vw" src="{{ $good->picture() }}"
                     data-srcset="{!! $good->picture() !!} 320w">
 
-                <section class="text-gray-600 body-font">
-                    <div class="container px-5 mx-auto flex flex-wrap">
-                        <div class="flex flex-wrap md:-m-2 -m-1 ">
-                            @foreach ($good->pictures() as $p)
-                                @if (!$loop->first)
-                                    <div class="md:p-2 p-1 w-1/2 lg:w-1/5">
-                                        <img alt="{{ $good->alt($loop->index) }} - thumbnail" srcset="/css/loading.gif 320w"
-                                            sizes="100vw" class="lozad w-full object-cover h-full object-center block"
-                                            data-srcset="{!! $good->thumbnail($loop->index) !!} 320w"
-                                            src="{{ $good->thumbnail($loop->index) }}">
-                                    </div>
-                                @endif
-                            @endforeach
+                @if (isBot() || request()->exists('full'))
+                    <section class="text-gray-600 body-font">
+                        <div class="container px-5 mx-auto flex flex-wrap">
+                            <div class="flex flex-wrap md:-m-2 -m-1 ">
+                                @foreach ($good->pictures() as $p)
+                                    @if (!$loop->first)
+                                        <div class="md:p-2 p-1 w-1/2 lg:w-1/5">
+                                            <img alt="{{ $good->alt($loop->index) }} - thumbnail"
+                                                srcset="/css/loading.gif 320w" sizes="100vw"
+                                                class="lozad w-full object-cover h-full object-center block"
+                                                data-srcset="{!! $good->thumbnail($loop->index) !!} 320w"
+                                                src="{{ $good->thumbnail($loop->index) }}">
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <article>
-                    {!! Illuminate\Support\Str::of($good->desc)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
-                </article>
+                    <article>
+                        {!! Illuminate\Support\Str::of($good->desc)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
+                    </article>
 
-                <section class="text-gray-600 body-font">
-                    <div class="container px-5 mx-auto flex flex-wrap">
-                        <div class="flex flex-wrap md:-m-2 -m-1">
-                            @foreach ($good->pictures() as $p)
-                                @if (!$loop->first)
-                                    <div class="md:p-2 p-1">
-                                        <img alt="{{ $good->alt($loop->index) }}" srcset="/css/loading.gif 320w"
-                                            sizes="100vw" class="lozad w-full object-cover h-full object-center block"
-                                            data-srcset="{!! $good->picture($loop->index) !!} 320w"
-                                            src="{{ $good->picture($loop->index) }}">
-                                    </div>
-                                @endif
-                            @endforeach
+                    <section class="text-gray-600 body-font">
+                        <div class="container px-5 mx-auto flex flex-wrap">
+                            <div class="flex flex-wrap md:-m-2 -m-1">
+                                @foreach ($good->pictures() as $p)
+                                    @if (!$loop->first)
+                                        <div class="md:p-2 p-1">
+                                            <img alt="{{ $good->alt($loop->index) }}" srcset="/css/loading.gif 320w"
+                                                sizes="100vw" class="lozad w-full object-cover h-full object-center block"
+                                                data-srcset="{!! $good->picture($loop->index) !!} 320w"
+                                                src="{{ $good->picture($loop->index) }}">
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                @endif
+
 
             </div>
         </div>
