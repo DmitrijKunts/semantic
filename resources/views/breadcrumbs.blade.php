@@ -7,7 +7,6 @@
                     <li>
                         <div>
                             <a rel="nofollow" href="{{ $breadcrumb->url }}" class="text-gray-400 hover:text-gray-500">
-                                <!-- Heroicon name: solid/home -->
                                 <svg class="flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor" aria-hidden="true">
                                     <path
@@ -20,7 +19,6 @@
                 @else
                     <li>
                         <div class="flex items-center">
-                            <!-- Heroicon name: solid/chevron-right -->
                             <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
