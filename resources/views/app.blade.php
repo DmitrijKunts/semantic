@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
 
+    <meta name="robots" content="noarchive">
     @yield('canonical')
     @yield('meta')
     @yield('schemaorg')
