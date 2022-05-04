@@ -16,7 +16,7 @@
                     @include('youtube')
                 @endif
 
-                <div class="p-4 md:w-1/3">
+                <section class="p-4 md:w-1/3">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                         <a rel="nofollow" href="{{ route('good', $good) }}">
                             <img srcset="/css/loading.gif 320w" sizes="100vw"
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             @endforeach
 
         </div>

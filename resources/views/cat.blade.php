@@ -44,10 +44,10 @@ $page = $page ? " #$page" : '';
                 'loadKeys' => $cat->calcKeysNotUsedWords(),
             ])
 
-            <div class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
+            <article class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
                 {!! Illuminate\Support\Str::of($cat->text)->explode("\n")->map(fn($i) => "<p>$i</p>")->join("\n") !!}
                 {!! $cat->snippet2Text()->map(fn($i) => "<p>$i</p>")->join("\n") !!}
-            </div>
+            </article>
 
         </div>
     </div>

@@ -60,7 +60,7 @@
 
 
 @section('content')
-    <section class="text-gray-600 body-font overflow-hidden">
+    <article class="text-gray-600 body-font overflow-hidden">
         <div class="container px-5 py-4 mx-auto">
 
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
@@ -193,7 +193,7 @@
 
             </div>
         </div>
-    </section>
+    </article>
 
     @include('goods', ['goods' => $good->brothers()])
 
