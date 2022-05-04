@@ -29,7 +29,7 @@ class BuyController extends Controller
         }
     }
 
-    public static function teleport($link, $subid1 = '')
+    public static function teleport($link, $subid1 = '', $referer = '')
     {
         if (!Str::contains($link, 'admitad')) return $link;
 
@@ -44,7 +44,7 @@ class BuyController extends Controller
 
         $req = request();
         $query['user_agent'] = $req->header('user-agent');
-        $query['referer'] = $req->header('referer');
+        $query['referer'] = $referer != '' ?: $req->header('referer');
         $query['ip_addr'] = $req->ip();
         // $query['ip_addr'] = '188.163.15.253';
         $query['subid'] = app()->domain();
