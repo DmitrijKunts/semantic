@@ -144,14 +144,14 @@ if (!function_exists('pleerRedirect')) {
     {
         $domains = [
             // "semantic1.local",
-            "dr-kadir.ru",
-            "xn----8sbvgdgjm0bcl7gh.xn--p1ai",
-            "temako-suchi.ru",
-            "atletikclub.ru",
-            "fotkay-nsk.ru",
-            "bocchicontrol.ru",
-            "m-de.ru",
-            "aquarium-best.ru",
+            // "dr-kadir.ru",
+            // "xn----8sbvgdgjm0bcl7gh.xn--p1ai",
+            // "temako-suchi.ru",
+            // "atletikclub.ru",
+            // "fotkay-nsk.ru",
+            // "bocchicontrol.ru",
+            // "m-de.ru",
+            // "aquarium-best.ru",
         ];
         if (in_array(app()->domain(), $domains)) {
             if (!isBot() && Str::of(request()->getRequestUri())->match('~\.jpg|\.gif|\.css|\.js~') == '') {
