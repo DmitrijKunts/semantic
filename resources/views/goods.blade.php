@@ -33,7 +33,7 @@
                             <h3 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                                 {{ $good->vendor }}</h3>
                             <h2 class="title-font text-lg font-medium text-gray-900 mb-3"><a
-                                    href="{{ route('good', $good) }}">{{ $good->nameKey($cat ?? null) }}</a>
+                                    href="{{ route('good', $good) }}">{!! $good->nameKey($cat ?? null) !!}</a>
                             </h2>
                             <p class="leading-relaxed mb-3">
                                 {{ $good->descKey($cat ?? null) }}
