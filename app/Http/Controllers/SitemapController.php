@@ -10,7 +10,7 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $cats = Cat::filter(Cat::query())->get();
+        $cats = Cat::active()->get();
         $goods = Good::all();
         return response()
             ->view('sitemap', compact('cats', 'goods'))

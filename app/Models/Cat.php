@@ -35,7 +35,7 @@ class Cat extends Model
         }
     }
 
-    public static function filter($query)
+    public function scopeActive($query)
     {
         $query->withCount('goods')
             ->withCount('keys')
@@ -73,7 +73,7 @@ class Cat extends Model
 
     public function childs()
     {
-        return self::filter($this->hasMany(Cat::class, 'p_id'));
+        return $this->hasMany(Cat::class, 'p_id')->active();
     }
 
     public function keys()
