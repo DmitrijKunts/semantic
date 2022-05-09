@@ -169,7 +169,6 @@ if (!function_exists('pleerRedirect')) {
     }
 }
 
-
 if (!function_exists('snippetClear')) {
     function snippetClear($str): string
     {
