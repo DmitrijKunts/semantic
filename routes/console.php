@@ -39,16 +39,18 @@ Artisan::command('cats:reset', function () {
 })->purpose('Cats reset feeded time');
 
 Artisan::command('cats:crawl', function () {
-    Cat::query()->update(['feeded' => null]);
-    $cc = new CatController;
-    $this->withProgressBar(Cat::withCount('keys')->where('keys_count', '>', 0)->get(), function ($cat) use ($cc) {
-        try {
-            $cc->index($cat, true);
-        } catch (\Exception $e) {
-        }
-    });
-    $this->info("\nCats crawled.");
-    $this->call('stat');
+    if (config('app.redirect_to') == '') {
+        Cat::query()->update(['feeded' => null]);
+        $cc = new CatController;
+        $this->withProgressBar(Cat::withCount('keys')->where('keys_count', '>', 0)->get(), function ($cat) use ($cc) {
+            try {
+                $cc->index($cat, true);
+            } catch (\Exception $e) {
+            }
+        });
+        $this->info("\nCats crawled.");
+        $this->call('stat');
+    }
 })->purpose('Cats crawl every node.');
 
 Artisan::command('cats:refeed', function () {

@@ -90,6 +90,12 @@ class Good extends Model
             : Str::words($text, 30);
     }
 
+    /**
+     * @param mixed $jsonString
+     * @param Cat $cat
+     *
+     * @return [type]
+     */
     public static function makeFromJson($jsonString, Cat $cat)
     {
         if ($jsonString == null) return false;
