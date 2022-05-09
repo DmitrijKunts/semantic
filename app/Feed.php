@@ -22,7 +22,7 @@ class Feed
         ];
     }
 
-    public static function getFeed($query, $oid = null)
+    public static function getFeed($query)
     {
         $params = self::baseParams();
         $params['q'] = $query;

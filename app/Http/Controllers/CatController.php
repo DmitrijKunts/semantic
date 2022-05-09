@@ -12,11 +12,17 @@ class CatController extends Controller
 {
     public function front()
     {
+        if (config('app.redirect_to') != '') {
+            return redirect('https://' . config('app.redirect_to'), 301);
+        }
         return view('front');
     }
 
     public function index(Cat $cat, $crawl = false)
     {
+        if (config('app.redirect_to') != '') {
+            return redirect('https://' . config('app.redirect_to') . route('cat', $cat, false), 301);
+        }
         if (Cat::active()->where('id', $cat->id)->count() == 0) abort(404);
         $catChilds = null;
         if ($cat->childs->count() == 0 && ($cat->feeded == null || $crawl)) {
