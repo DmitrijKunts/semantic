@@ -198,7 +198,11 @@
     @include('goods', ['goods' => $good->brothers()])
 
     @include('cats', [
-        'catChilds' => $good->cats()->first()->brothers()->limit(20)->get(),
+        // 'catChilds' => $good->cats()->first()->brothers()->limit(20)->get(),
+        'catChilds' => constSort(
+            $good->cats()->first()->brothers()->get(),
+            $good->id
+        )->slice(0, 20),
         'catsAsKeys' => $good->name,
     ])
 
