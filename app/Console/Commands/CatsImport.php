@@ -17,7 +17,7 @@ class CatsImport extends Command
      *
      * @var string
      */
-    protected $signature = 'cats:import';
+    protected $signature = 'cats:import {--without_keys}';
 
     /**
      * The console command description.
@@ -43,10 +43,12 @@ class CatsImport extends Command
      */
     public function handle()
     {
+        $withoutKeys = $this->option('without_keys');
+        $withKeys = $withoutKeys ? true : !File::exists(storage_path('keys.xlsx'));
         $this->output->title('Starting import');
         if (app()->isDownForMaintenance()) DB::beginTransaction();
         Excel::import(
-            new \App\Imports\CatsImport($this, !File::exists(storage_path('keys.xlsx'))),
+            new \App\Imports\CatsImport($this, $withKeys),
             storage_path('cats.xlsx')
         );
         Cache::flush();

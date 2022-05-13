@@ -82,6 +82,12 @@ class Good extends Model
     {
         if ($this->summary != '') {
             $text = $this->summary;
+            $sents = Str::of($text)
+                ->explode('.')
+                ->filter(fn ($i) => $i != '')
+                ->map(fn ($i) => trim($i))
+                ->slice(0, 2);
+            $text = constSort($sents, $cat->id ?? '')->join('. ');
         } else {
             $text = $this->desc;
         }

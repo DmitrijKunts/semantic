@@ -28,10 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DB::statement(
-            'PRAGMA journal_mode=WAL;'
-        );
-
         if (scheme() == 'https') {
             URL::forceScheme('https');
         }

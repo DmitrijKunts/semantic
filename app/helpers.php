@@ -14,7 +14,8 @@ if (!function_exists('genConst')) {
 if (!function_exists('constSort')) {
     function constSort($items, $noise = '')
     {
-        $items = collect($items);
+        $useArray = gettype($items) == 'array';
+        if ($useArray) $items = collect($items);
         $size = $items->count();
         $items = $items->sortBy(function ($item) use ($size, $noise) {
             if (gettype($item) == 'array') {
@@ -23,7 +24,8 @@ if (!function_exists('constSort')) {
                 return genConst($size, (string)$item . $noise);
             }
         });
-        return array_values($items->all());
+        if ($useArray) return array_values($items->all());
+        return $items->values();
     }
 }
 
