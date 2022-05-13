@@ -82,15 +82,16 @@ class Good extends Model
     {
         if ($this->summary != '') {
             $text = $this->summary;
-            $sents = Str::of($text)
-                ->explode('.')
-                ->filter(fn ($i) => $i != '')
-                ->map(fn ($i) => trim($i))
-                ->slice(0, 2);
-            $text = constSort($sents, $cat->id ?? '')->join('. ');
         } else {
             $text = $this->desc;
         }
+        $sents = Str::of($text)
+            ->explode('.')
+            ->filter(fn ($i) => $i != '')
+            ->map(fn ($i) => trim($i))
+            ->slice(0, 2);
+        $text = constSort($sents, $cat->id ?? '')->join('. ');
+
         return $cat != null && $cat->keysNotUsedWords->count() > 0
             ? Str::words($text, 30, '') . ' ' . $cat->keysNotUsedWords->pop() . '...'
             : Str::words($text, 30);
