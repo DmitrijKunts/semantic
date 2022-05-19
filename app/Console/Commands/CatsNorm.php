@@ -42,6 +42,9 @@ class CatsNorm extends Command
 
     public function handle()
     {
+        if (config('app.redirect_to') != '') {
+            $this->info("Use redirect. Skipping.");
+        }
         $cats = Cat::withCount('goods')->orderBy('goods_count')->get();
         $this->withProgressBar($cats, function ($cat) {
             $this->normalize($cat);
