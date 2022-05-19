@@ -8,6 +8,7 @@ return [
     'redirect_to' => env('REDIRECT_TO', ''),
     'gtag_id' => env('GTAG_ID', ''),
     'escape_links' => Str::of(env('ESCAPE_LINKS', ''))->split('~\s+~'),
+    'geo_address' => env('GEO_ADDRESS', ''),
 
     /*
     |--------------------------------------------------------------------------
