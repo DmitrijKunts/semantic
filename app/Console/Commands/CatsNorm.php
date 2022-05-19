@@ -28,12 +28,19 @@ class CatsNorm extends Command
     {
         $goods = $cat->goods()->get();
         foreach ($goods as $good) {
-            $detachs = $good->cats->modelKeys();
+            $detachs = [];
+            foreach ($good->cats()->where('cats.id', '<>', $cat->id)->withCount('goods')->get() as $c) {
+                if ($c->goods_count <= 1) {
+                    continue;
+                }
+                $detachs[] = $c->id;
+            }
+            // $detachs = $good->cats->modelKeys();
             if (count($detachs) <= $this->minGoodsInGroup) {
                 continue;
             }
 
-            $detachs = array_diff($detachs, [$cat->id]);
+            // $detachs = array_diff($detachs, [$cat->id]);
             if (count($detachs) > 0) {
                 $good->cats()->detach($detachs);
             }
@@ -52,5 +59,4 @@ class CatsNorm extends Command
         $this->info("\nCats normilzed!");
         return 0;
     }
-
 }
