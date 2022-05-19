@@ -49,6 +49,7 @@ Artisan::command('cats:crawl', function () {
             }
         });
         $this->info("\nCats crawled.");
+        $this->call('cats:norm');
         $this->call('stat');
     }
 })->purpose('Cats crawl every node.');
