@@ -35,12 +35,10 @@ class CatsNorm extends Command
                 }
                 $detachs[] = $c->id;
             }
-            // $detachs = $good->cats->modelKeys();
             if (count($detachs) <= $this->minGoodsInGroup) {
                 continue;
             }
 
-            // $detachs = array_diff($detachs, [$cat->id]);
             if (count($detachs) > 0) {
                 $good->cats()->detach($detachs);
             }

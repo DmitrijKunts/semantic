@@ -113,11 +113,21 @@ class MapSheetImport implements OnEachRow
 
     public static function genSlug($name, $pId)
     {
-        $slug = Str::of($name)->slug('-');
-        if (Cat::where('slug', $slug)->where('name', '<>', $name)->exists()) {
-            return Str::of("$name $pId")->slug('-');
+        $suffix = '';
+        while (true) {
+            $slug = Str::of("$name$suffix")->slug('-');
+            if (Cat::where('slug', $slug)->where('name', '<>', $name)->exists()) {
+                $suffix++;
+                continue;
+            }
+            return $slug;
         }
-        return $slug;
+
+        // $slug = Str::of($name)->slug('-');
+        // if (Cat::where('slug', $slug)->where('name', '<>', $name)->exists()) {
+        //     return Str::of("$name $pId")->slug('-');
+        // }
+        // return $slug;
     }
 }
 
