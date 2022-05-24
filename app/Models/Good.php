@@ -128,26 +128,32 @@ class Good extends Model
 
             $sku = genConst(9999999, $offer->code);
 
-            $good =  Good::updateOrCreate(
-                ['code' => (string)$offer->code],
-                [
-                    'sku' => $sku,
-                    'name' => (string)$offer->name,
-                    'link' => (string)$offer->url,
-                    'slug' => Str::of($sku . ' ' . $offer->name)->slug('-'),
-                    'price' => (float)$offer->price,
-                    'oldprice' => (float)$offer->oldprice,
-                    'currency' => (string)$offer->currencyId,
-                    'pictures' => implode(',', Arr::wrap($offer->pictures)),
-                    'alts' => implode(',', Arr::wrap($offer->alts)),
-                    'vendor' => (string)$offer->vendor,
-                    'model' => (string)$offer->model,
-                    'desc' => (string)$offer->description,
-                    'summary' => (string)($offer->summary ?? ''),
-                    'tech' => $tech,
-                    'equip' => $equip,
-                ]
-            );
+            $good = Good::where([
+                ['code', (string)$offer->code],
+                ['updated_at', '>=', now()->addHours(-2)],
+            ])->first();
+            if (!$good) {
+                $good =  Good::updateOrCreate(
+                    ['code' => (string)$offer->code],
+                    [
+                        'sku' => $sku,
+                        'name' => (string)$offer->name,
+                        'link' => (string)$offer->url,
+                        'slug' => Str::of($sku . ' ' . $offer->name)->slug('-'),
+                        'price' => (float)$offer->price,
+                        'oldprice' => (float)$offer->oldprice,
+                        'currency' => (string)$offer->currencyId,
+                        'pictures' => implode(',', Arr::wrap($offer->pictures)),
+                        'alts' => implode(',', Arr::wrap($offer->alts)),
+                        'vendor' => (string)$offer->vendor,
+                        'model' => (string)$offer->model,
+                        'desc' => (string)$offer->description,
+                        'summary' => (string)($offer->summary ?? ''),
+                        'tech' => $tech,
+                        'equip' => $equip,
+                    ]
+                );
+            }
 
             $good->cats()->syncWithoutDetaching($cat);
             DB::table('cat_good')
