@@ -49,8 +49,11 @@ class BuyController extends Controller
         // $query['ip_addr'] = '188.163.15.253';
         $query['subid'] = app()->domain();
         if ($subid1) {
+            $subid3 = Str::contains(url()->current(), '/buy/') ? url()->previous() : url()->current();
+            $subid3 = (string)Str::of($subid3)->replaceMatches('~https?://~', '');
             $query['subid1'] = $subid1;
             $query['subid2'] = $subid1 . '_' . app()->domain();
+            $query['subid3'] = $subid1 . '_' . $subid3;
         }
         $response = Http::get($url, $query);
         if ($response->ok()) {
