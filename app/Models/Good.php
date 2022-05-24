@@ -130,7 +130,7 @@ class Good extends Model
 
             $good = Good::where([
                 ['code', (string)$offer->code],
-                ['updated_at', '>=', now()->addHours(-2)],
+                ['updated_at', '>=', now()->addHours(-3)],
             ])->first();
             if (!$good) {
                 $good =  Good::updateOrCreate(
