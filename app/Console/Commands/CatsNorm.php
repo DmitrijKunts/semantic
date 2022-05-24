@@ -30,7 +30,7 @@ class CatsNorm extends Command
         foreach ($goods as $good) {
             $detachs = [];
             foreach ($good->cats()->where('cats.id', '<>', $cat->id)->withCount('goods')->get() as $c) {
-                if ($c->goods_count <= 1) {
+                if ($c->goods_count <= $this->minGoodsInGroup) {
                     continue;
                 }
                 $detachs[] = $c->id;

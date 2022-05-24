@@ -122,12 +122,6 @@ class MapSheetImport implements OnEachRow
             }
             return $slug;
         }
-
-        // $slug = Str::of($name)->slug('-');
-        // if (Cat::where('slug', $slug)->where('name', '<>', $name)->exists()) {
-        //     return Str::of("$name $pId")->slug('-');
-        // }
-        // return $slug;
     }
 }
 
