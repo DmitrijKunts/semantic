@@ -84,30 +84,22 @@ class MapSheetImport implements OnEachRow
                 $text = File::get($textFile);
             }
             $pId = self::$levels[$lastCol - 1];
-            $_c = Cat::updateOrCreate(
-                [
-                    'name' => $_name
-                ],
-                [
-                    'p_id' => $pId,
-                    'slug' => self::genSlug($_name, $pId),
-                    'sheet' => $_sheet,
-                    'text' => $text,
-                ]
-            );
-            // $_c = Cat::updateOrCreate(
-            //     [
-            //         'p_id' => $pId,
-            //         'name' => $_name
-            //     ],
-            //     [
-            //         'slug' => self::genSlug($_name, $pId),
-            //         'sheet' => $_sheet,
-            //         'text' => $text,
-            //     ]
-            // );
-
-            self::$levels[$lastCol] = $_c->id;
+            try {
+                $_c = Cat::updateOrCreate(
+                    [
+                        'name' => $_name
+                    ],
+                    [
+                        'p_id' => $pId,
+                        'slug' => self::genSlug($_name, $pId),
+                        'sheet' => $_sheet,
+                        'text' => $text,
+                    ]
+                );
+                self::$levels[$lastCol] = $_c->id;
+            } catch (\Exception $e) {
+                $this->output->info($e->getMessage());
+            }
         }
     }
 
