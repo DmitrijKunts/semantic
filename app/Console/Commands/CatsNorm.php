@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class CatsNorm extends Command
 {
-    private int $minGoodsInGroup = 3;
+    private int $minGoodsInGroup = 5;
 
     /**
      * The name and signature of the console command.
