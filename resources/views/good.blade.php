@@ -198,7 +198,6 @@
     @include('goods', ['goods' => $good->brothers()])
 
     @include('cats', [
-        // 'catChilds' => $good->cats()->first()->brothers()->limit(20)->get(),
         'catChilds' => constSort(
             $good->cats()->first()->brothers()->get(),
             $good->id
