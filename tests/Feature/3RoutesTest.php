@@ -10,11 +10,15 @@ use Tests\TestCase;
 
 class RoutesTest extends TestCase
 {
-    public function test_home()
+    public function test_db_init()
     {
+        $this->artisan('migrate:fresh')->assertExitCode(0);
         $this->artisan('cats:import')->assertExitCode(0);
         $this->artisan('keys:import')->assertExitCode(0);
+    }
 
+    public function test_home()
+    {
         $c = Cat::first();
         $this->get('/')
             ->assertStatus(200)
