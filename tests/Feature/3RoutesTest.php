@@ -25,7 +25,7 @@ class RoutesTest extends TestCase
 
     public function test_cat()
     {
-        $c = Cat::inRandomOrder()->first();
+        $c = Cat::active()->inRandomOrder()->first();
         $this->get(route('cat', $c, false))
             ->assertStatus(200)
             ->assertSee($c->name);
