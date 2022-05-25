@@ -14,7 +14,7 @@ class Feed
     {
         return  [
             'token' => config('feed.api_token'),
-            'host' => app()->domain(),
+            'host' => app()->domain() ?: 'localhost',
             'ln' => config('feed.lang'),
             'geo' => config('feed.geo'),
             'c' => config('feed.goods_count'),

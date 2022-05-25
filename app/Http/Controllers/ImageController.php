@@ -13,7 +13,8 @@ class ImageController extends Controller
 {
     public static function downloadImage($src, $dst)
     {
-        $ua = (string)Str::of(Str::of(File::get(storage_path('../user-agents.txt')))->explode("\n")->random())->trim();
+        $uaFile = File::exists(storage_path('user-agents.txt')) ? 'user-agents.txt' : '../user-agents.txt';
+        $ua = (string)Str::of(Str::of(File::get(storage_path($uaFile)))->explode("\n")->random())->trim();
         try {
             $img = Http::withOptions([
                 'verify' => false,
@@ -53,7 +54,7 @@ class ImageController extends Controller
             if (!File::exists($imageCacheFile)) abort(404);
         }
 
-        $imgFilename = public_path('imgs/' . app()->domain() . '/' . $good->sku . '/' . $index . '.jpg');
+        $imgFilename = public_path('imgs/' . (app()->domain() ?: 'local') . '/' . $good->sku . '/' . $index . '.jpg');
         if (!File::exists($imgFilename)) {
             File::makeDirectory(File::dirname($imgFilename), 0777, true, true);
             File::copy($imageCacheFile, $imgFilename);

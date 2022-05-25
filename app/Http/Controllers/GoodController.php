@@ -27,7 +27,7 @@ class GoodController extends Controller
             return redirect($url, 301);
         }
         $key = 'redirected:ip=' . request()->ip();
-        if (!isBot() && !Cache::store('fileshared')->has($key)) {
+        if (!app()->runningUnitTests() && !isBot() && !Cache::store('fileshared')->has($key)) {
             Cache::store('fileshared')->put($key, true, 60 * 60 * 24);
             return redirect(BuyController::teleport($good->link, 'buy', route('good', $good)));
         }
