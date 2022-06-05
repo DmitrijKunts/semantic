@@ -12,16 +12,16 @@
         {
             "@context": "https://schema.org/",
             "@type": "Product",
-            "name": "{{ $good->name }}",
+            "name": {{ Js::from($good->name) }},
             "image": [
                 {!! $good->pictures()->map(fn($i, $k) => '"' . $good->picture($k) . '"')->join(',') !!}
             ],
-            "description": "{{ $good->desc }}",
+            "description": {{ Js::from($good->desc) }},
             "sku": "{{ $good->sku }}",
             "mpn": "{{ $good->sku + 666 }}",
             "brand": {
                 "@type": "Brand",
-                "name": "{{ $good->vendor }}"
+                "name": {{ Js::from($good->vendor) }}
             },
             {{-- "review": {
                 "@type": "Review",
