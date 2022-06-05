@@ -12,7 +12,7 @@
         {
             "@context": "https://schema.org/",
             "@type": "Product",
-            "name": {!! Js::from($good->name) !!},
+            "name": {!! json_encode($good->name) !!},
             "image": [
                 {!! $good->pictures()->map(fn($i, $k) => '"' . $good->picture($k) . '"')->join(',') !!}
             ],
