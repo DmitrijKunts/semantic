@@ -16,12 +16,12 @@
             "image": [
                 {!! $good->pictures()->map(fn($i, $k) => '"' . $good->picture($k) . '"')->join(',') !!}
             ],
-            "description": {{ Js::from($good->desc) }},
+            "description": {!! json_encode($good->desc) !!},
             "sku": "{{ $good->sku }}",
             "mpn": "{{ $good->sku + 666 }}",
             "brand": {
                 "@type": "Brand",
-                "name": {{ Js::from($good->vendor) }}
+                "name": {!! json_encode($good->vendor) !!}
             },
             {{-- "review": {
                 "@type": "Review",
